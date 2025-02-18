@@ -1,9 +1,16 @@
-import Image from "next/image";
-import LoginPage from "./Login/Login";
-import RegisterPage from "./Register/Register";
+"use client";
+import Cards from "@/components/Cards";
+import Footer from "@/components/Footer";
+import LoginPage from "@/components/Login/Login";
+import Navbar from "@/components/Nabvar";
+import { useState } from "react";
 
-export default function Home() {
+export default function Page() {
+  
+
   return (
-    <RegisterPage/>
+    <div >
+      <LoginPage/>
+    </div>
   );
 }
