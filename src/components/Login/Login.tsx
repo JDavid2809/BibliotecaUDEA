@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { IdCard, Lock } from "lucide-react";
 import Link from "next/link";
+import { motion } from "framer-motion"; // Importamos Framer Motion
 
 function LoginPage() {
   const router = useRouter();
@@ -18,17 +19,20 @@ function LoginPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!formData.matricula || !formData.password) {
       alert("Por favor, completa todos los campos.");
       return;
     }
-
     router.push("/pageArea");
   };
 
   return (
-    <div className="font-[sans-serif] min-h-screen flex items-center justify-center bg-white">
+    <motion.div
+      initial={{ opacity: 0, y: 50 }} // Animación inicial (oculto y más abajo)
+      animate={{ opacity: 1, y: 0 }} // Estado final (visible y en su posición)
+      transition={{ duration: 0.6, ease: "easeOut" }} // Duración y suavidad
+      className="font-[sans-serif] min-h-screen flex items-center justify-center bg-white"
+    >
       <div className="grid md:grid-cols-2 items-center gap-4 max-md:gap-8 max-w-6xl max-md:max-w-lg w-full p-6 m-4 shadow-lg rounded-md">
         {/* Formulario */}
         <div className="md:max-w-md w-full px-6 py-6">
@@ -46,7 +50,7 @@ function LoginPage() {
               <div className="relative flex items-center">
                 <input
                   name="matricula"
-                  type="number"
+                  type="text"
                   required
                   value={formData.matricula}
                   onChange={handleChange}
@@ -96,14 +100,12 @@ function LoginPage() {
 
             {/* Botón de acceso */}
             <div className="mt-12 flex justify-center">
-              <Link href={"/pageArea"} className="inline-block w-3/4">
-                <button
+              <button
                 type="submit"
-                className="w-full shadow-xl py-3 px-4 text-lg tracking-wide rounded-tl-xl rounded-br-xl text-white bg-[#2a4856] hover:bg-[#03003f] focus:outline-none transition-all duration-300 transform hover:scale-105"
-                >
+                className="w-3/4 shadow-xl py-3 px-4 text-lg tracking-wide rounded-tl-xl rounded-br-xl text-white bg-[#2a4856] hover:bg-[#03003f] focus:outline-none transition-all duration-300 transform hover:scale-105"
+              >
                 Iniciar sesión
-                </button>
-              </Link>
+              </button>
             </div>
 
             <p className="text-sm mt-4 text-gray-800 text-center">
@@ -124,7 +126,7 @@ function LoginPage() {
           />
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 

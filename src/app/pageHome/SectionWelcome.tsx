@@ -10,15 +10,15 @@ const Seccion2 = () => {
 
   const cards = [
     {
-      image: "/api/placeholder/400/400",
+      image: "https://placehold.co/60",
       options: "Saber más.."
     },
     {
-      image: "/api/placeholder/400/400",
+      image: "https://placehold.co/60",
       options: "Saber más.."
     },
     {
-      image: "/api/placeholder/400/400",
+      image: "https://placehold.co/60",
       options: "Saber más.."
     }
   ];

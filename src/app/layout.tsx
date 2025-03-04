@@ -4,7 +4,8 @@ import "./globals.css";
 import Navbar from "@/components/Nabvar";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import ChatBot from "@/components/ChatBot";
+import ButtonFloating from "@/components/ButtonFloating";
+
 
 
 
@@ -36,7 +37,7 @@ export default function RootLayout({
         <Navbar/>
         <Header/>
         {children}
-        <ChatBot/>
+        <ButtonFloating/>
         <Footer/>
       </body>
     </html>
