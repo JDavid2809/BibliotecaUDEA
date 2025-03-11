@@ -1,6 +1,6 @@
 export default function Header() {
     return (
-      <header className="w-full bg-[#1e3a4c] py-6">
+      <header className="w-full bg-[#0048ac] py-6">
         <nav className="container mx-auto px-4">
           <ul className="flex items-center">
             <li>

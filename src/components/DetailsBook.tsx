@@ -49,7 +49,7 @@ const BookDetailSection: React.FC = () => {
                 transition={{ delay: 0.5, duration: 0.5 }}
                 className="flex flex-wrap items-center gap-4 mb-6"
             >
-                <button className="bg-[#2a4856] text-white px-8 py-3 rounded-2xl flex items-center gap-2 hover:bg-[#3c7498] transition">
+                <button className="bg-[#0048ac] text-white px-8 py-3 rounded-2xl flex items-center gap-2 hover:bg-[#3c7498] transition">
                 Ver en linea
                 <Eye size={24} />
                 </button>

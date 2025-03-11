@@ -76,7 +76,7 @@ export default function MateriasGrid() {
                                 <div className="flex justify-center">
                                     <Link
                                         href="/pageLibrary"
-                                        className="inline-block bg-[#37515F] text-white font-semibold px-5 py-2 rounded-full hover:bg-[#2A3F4A] transition-colors text-base"
+                                        className="inline-block bg-[#0048ac] text-white font-semibold px-5 py-2 rounded-full hover:bg-[#02013f] transition-colors text-base"
                                     >
                                         VER MÁS
                                     </Link>
@@ -87,7 +87,7 @@ export default function MateriasGrid() {
                 </div>
 
                 <motion.div 
-                    className="bg-[#37515F] text-white rounded-lg p-6"
+                    className="bg-[#0048ac] text-white rounded-lg p-6"
                     initial={{ opacity: 0, x: 50 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.6, delay: 0.3 }}

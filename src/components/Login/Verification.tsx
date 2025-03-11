@@ -53,7 +53,7 @@ function VerificationPage() {
                 <button
                     type="submit"
                     onClick={handlerPages}
-                    className="w-full shadow-xl py-3 px-4 text-lg tracking-wide rounded-tl-xl rounded-br-xl text-white bg-[#2a4856] hover:bg-[#03003f] focus:outline-none transition-all duration-300 transform hover:scale-105"
+                    className="w-3/4 shadow-xl py-3 px-4 text-lg tracking-wide rounded-xl text-white bg-[#0048ac] hover:bg-[#03003f] focus:outline-none transition-all duration-300 transform hover:scale-105"
                 >
                     Verificar
                 </button>

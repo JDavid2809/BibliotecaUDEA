@@ -1,8 +1,11 @@
-import DashboardLayout from '@/components/Dashboard/dashboard'
+import AdminLayout from '@/app/admin/layout'
 import React from 'react'
 
 export default function page() {
     return (
-        <DashboardLayout/>
+        <AdminLayout>
+            <h1>Page Content</h1>
+        </AdminLayout>
+
     )
 }

@@ -93,8 +93,8 @@ const predefinedQuestions = [
                 transition-all duration-300
                 ${
                 isOpen
-                    ? "bg-[#1e3a4c] transform rotate-45"
-                    : "bg-[#030240] hover:bg-[#1e3a4c] animate-pulse-soft hover:animate-none transform hover:scale-110"
+                    ? "bg-[#0048ac] transform rotate-45"
+                    : "bg-[#030240] hover:bg-[#0048ac] animate-pulse-soft hover:animate-none transform hover:scale-110"
                 }
             `}
             >
@@ -129,9 +129,9 @@ const predefinedQuestions = [
             {/* Tooltip */}
             {showTooltip && !isOpen && (
             <div className="absolute bottom-full right-0 mb-2 w-max">
-                <div className="bg-[#1e3a4c] text-white text-sm py-1 px-3 rounded shadow-lg animate-fadeIn">
+                <div className="bg-[#0048ac] text-white text-sm py-1 px-3 rounded shadow-lg animate-fadeIn">
                 ¿Necesitas ayuda?
-                <div className="absolute w-2 h-2 bg-[#1e3a4c] transform rotate-45 bottom-[-4px] right-5"></div>
+                <div className="absolute w-2 h-2 bg-[#0048ac] transform rotate-45 bottom-[-4px] right-5"></div>
                 </div>
             </div>
             )}
@@ -192,7 +192,7 @@ const predefinedQuestions = [
                     <div
                         className={`
                         max-w-[85%] rounded-lg p-2 text-sm
-                        ${message.role === "user" ? "bg-[#030240] text-white" : "bg-[#1e3a4c] text-white"}
+                        ${message.role === "user" ? "bg-[#030240] text-white" : "bg-[#0048ac] text-white"}
                         animate-slideIn
                     `}
                     >
@@ -220,7 +220,7 @@ const predefinedQuestions = [
                     <button
                     key={q.id}
                     className="text-left px-2 py-1.5 text-sm bg-gray-50 hover:bg-gray-100 
-                        rounded-md transition-all duration-200 text-[#1e3a4c]
+                        rounded-md transition-all duration-200 text-[#0048ac]
                         hover:shadow-sm transform hover:scale-[1.02]"
                     onClick={() => handleQuestionClick(q.question, q.answer)}
                     >

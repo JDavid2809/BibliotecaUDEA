@@ -3,8 +3,7 @@
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { User, Mail, Lock, Phone, IdCard } from "lucide-react";
-import Link from "next/link";
-import { motion } from "framer-motion"; // Importamos Framer Motion
+import { motion } from "framer-motion"; 
 
 function RegisterPage() {
   const router = useRouter();
@@ -172,7 +171,7 @@ function RegisterPage() {
                 <button
                   type="submit"
                   onClick={handleSubmit}
-                  className="w-full shadow-xl py-3 px-4 text-lg tracking-wide rounded-tl-xl rounded-br-xl text-white bg-[#2a4856] hover:bg-[#03003f] focus:outline-none transition-all duration-300 transform hover:scale-105"
+                  className="w-full shadow-xl py-3 px-4 text-lg tracking-wide rounded-xl text-white bg-[#0048ac] hover:bg-[#03003f] focus:outline-none transition-all duration-300 transform hover:scale-105"
                 >
                   Registrarse
                 </button>

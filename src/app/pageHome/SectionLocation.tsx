@@ -18,7 +18,7 @@ export default function Seccion3() {
                 </p>
                 <Link
                 href={"https://www.google.com.mx/maps/place/Av.+Reforma+3529,+La+Paz,+72160+Heroica+Puebla+de+Zaragoza,+Pue./@19.0590663,-98.2272576,17z/data=!3m1!4b1!4m6!3m5!1s0x85cfc6d39bf72339:0x5b19b09552b887eb!8m2!3d19.0590663!4d-98.2246827!16s%2Fg%2F11c5m_ctjz?entry=ttu&g_ep=EgoyMDI1MDIxMi4wIKXMDSoASAFQAw%3D%3D"}>
-                <button className="bg-[#2a4856] w-2/4 text-white px-6 py-3 shadow-md hover:bg-[#1e3442] transition">
+                <button className="bg-[#0048ac] w-2/4 text-white px-6 py-3 shadow-md hover:bg-[#1e3442] transition">
                 Vamos...
                 </button>
                 </Link>

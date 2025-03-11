@@ -95,7 +95,7 @@ import EditModal from "../Modals/ProfileModal";
                 </div>
 
                 <div className="flex gap-4 justify-end">
-                    <button className="flex items-center gap-2 px-4 py-2 border rounded-lg text-white shadow-xl bg-[#2a4856] hover:bg-red-700">
+                    <button className="flex items-center gap-2 px-4 py-2 border rounded-lg text-white shadow-xl bg-[#0048ac] hover:bg-red-700">
                     Cancelar
                     <CircleX  className="h-4 w-4 text-white" />
                     </button>
@@ -103,7 +103,7 @@ import EditModal from "../Modals/ProfileModal";
                     
                     className="flex items-center gap-2 px-4 py-2 bg-white text-gray-900 rounded-lg shadow-xl hover:bg-gray-300">
                     Guardar
-                    <Save className="h-4 w-4 text-[#2a4856]" />
+                    <Save className="h-4 w-4 text-[#0048ac]" />
                     </button>
                 </div>
                 </form>
