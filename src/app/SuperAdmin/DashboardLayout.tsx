@@ -8,7 +8,7 @@ import { LayoutDashboard, Users, ShoppingCart, Settings, ChevronLeft, Menu, Book
 import { useRouter, usePathname } from "next/navigation"
 import Link from "next/link"
 
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+export default function SuperDashboardLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter()
   const pathname = usePathname()
   const [showWelcome, setShowWelcome] = useState(true)
@@ -20,22 +20,39 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const menuItems = [
     {
       id: "dashboard",
-      path: "/pageAdmin",
+      path: "/pageSuperAdmin",
       title: "Dashboard",
       icon: <LayoutDashboard className="h-5 w-5" />,
       description: "Acciones que puedes realizar",
       color: "from-purple-500 to-blue-500",
     },
     {
+      id: "users",
+      path: "/SuperAdmin/users",
+      title: "Usuarios",
+      icon: <Users className="h-5 w-5" />,
+      description: "Administración de usuarios aministradores",
+      color: "from-pink-500 to-rose-500",
+    },
+    {
       id: "books",
-      path: "/admin/Navegacion",
+      path: "/SuperAdmin/Navegacion",
       title: "Libros",
       icon: <BookMarked  className="h-5 w-5" />,
       description: "Administración de libros",
       color: "from-green-500 to-emerald-500",
     },
+    {
+      id: "matriculas",
+      path: "/SuperAdmin/matriculas",
+      title: "Matriculas",
+      icon: <IdCard className="h-5 w-5" />,
+      description: "Administración de matriculas",
+      color: "from-amber-500 to-orange-500",
+    },
   ]
 
+  // Determinar si una ruta está activa
   const isActive = (path: string) => {
     return pathname === path
   }
@@ -51,9 +68,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   }
 
   useEffect(() => {
-    if (pathname === "/admin") {
+    if (pathname === "/SuperAdmin") {
       setShowWelcome(true)
-    } else if (pathname.startsWith("/admin/")) {
+    } else if (pathname.startsWith("/SuperAdmin/")) {
       setShowWelcome(false)
     }
   }, [pathname])
@@ -175,7 +192,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
                   >
-                    Bienvenido, Administrator
+                    Bienvenido, Super-Administrator
                   </motion.h1>
                   <motion.p
                     className="text-xl text-gray-900"

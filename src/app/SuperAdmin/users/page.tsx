@@ -35,11 +35,11 @@ const TableDesign = () => {
     const router = useRouter();
 
     const handleUpdateUser = () => {
-        router.push("/admin/users/editUser");
+        router.push("/SuperAdmin/users/editUser");
     }
 
     const handleAddeUser = () => {
-        router.push("/admin/users/addUser");
+        router.push("/SuperAdmin/users/addUser");
     }
 
     return (
@@ -75,7 +75,7 @@ const TableDesign = () => {
             {/* Tabla para pantallas grandes */}
             <div className="overflow-x-auto max-h-[500px] overflow-y-auto">
                 <table className="min-w-full bg-gray-50 border border-gray-200 rounded-md hidden sm:table">
-                    <thead className="bg-[#0048ac] text-white sticky top-0 z-10">
+                    <thead className="bg-[#1e3a4c] text-white sticky top-0 z-10">
                         <tr className="text-lg">
                             <th className="py-4 px-6 border-b text-left">Foto</th>
                             <th className="py-4 px-6 border-b text-left">Nombre</th>
