@@ -44,7 +44,7 @@ import Book from "../Book";
             {subjects.map((subject, index) => (
                 <li key={index} className="flex items-center justify-between gap-2 p-2 border-b">
                 <div className="flex items-center gap-2">
-                    <img src="https://placehold.co/90" alt="icon" className="w-20 h-20 rounded-md" />
+                    <img src="8.jpg" alt="icon" className="w-20 h-20 rounded-md" />
                     {subject}
                 </div>
                 <button className="p-2 text-gray-500 rounded-full hover:text-gray-900 transition">

@@ -4,7 +4,10 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { IdCard, Lock } from "lucide-react";
 import Link from "next/link";
-import { motion } from "framer-motion"; // Importamos Framer Motion
+import { motion } from "framer-motion"; 
+import { toast } from "nextjs-toast-notify";
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function LoginPage() {
   const router = useRouter();
@@ -20,17 +23,32 @@ function LoginPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.matricula || !formData.password) {
-      alert("Por favor, completa todos los campos.");
+      toast.error("¡Necesitas llenar todos los campos!", {
+            duration: 4000,
+            progress: true,
+            position: "top-center",
+            transition: "bounceIn",
+            icon: '',
+            sound: true,
+          });
       return;
     }
     router.push("/pageArea");
+    toast.success("¡Se inicio sesión correctamente!", {
+      duration: 4000,
+      progress: true,
+      position: "top-center",
+      transition: "bounceIn",
+      icon: '',
+      sound: true,
+    });
   };
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 50 }} // Animación inicial (oculto y más abajo)
-      animate={{ opacity: 1, y: 0 }} // Estado final (visible y en su posición)
-      transition={{ duration: 0.6, ease: "easeOut" }} // Duración y suavidad
+      initial={{ opacity: 0, y: 50 }} 
+      animate={{ opacity: 1, y: 0 }} 
+      transition={{ duration: 0.6, ease: "easeOut" }} 
       className="font-[sans-serif] min-h-screen flex items-center justify-center bg-white"
     >
       <div className="grid md:grid-cols-2 items-center gap-4 max-md:gap-8 max-w-6xl max-md:max-w-lg w-full p-6 m-4 shadow-lg rounded-md">
@@ -92,7 +110,7 @@ function LoginPage() {
                 </label>
               </div>
               <div>
-                <a href="#" className="text-blue-600 font-semibold text-sm hover:underline">
+                <a href="#" className="text-blue-600 font-semibo ld text-sm hover:underline">
                   ¿Olvidaste tu contraseña?
                 </a>
               </div>
@@ -118,10 +136,10 @@ function LoginPage() {
         </div>
 
         {/* Imagen lateral */}
-        <div className="md:h-full bg-[#000842] rounded-xl lg:p-12 p-8">
+        <div className="md:h-full rounded-xl lg:p-12 p-8">
           <img
-            src="https://readymadeui.com/signin-image.webp"
-            className="w-full h-full object-contain"
+            src="UdeaLogin.jpg"
+            className="w-full h-full object-contain rounded-xl"
             alt="Login illustration"
           />
         </div>

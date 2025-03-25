@@ -15,7 +15,7 @@ export default function Seccion1() {
             {/* Sección 1 */}
             <div
                 className="min-h-screen bg-cover bg-center relative"
-                style={{ backgroundImage: "url('/udea.png')" }}
+                style={{ backgroundImage: "url('/UdeaPrincipal.jpg')" }}
             >
                 <motion.h1 
                     className="text-5xl text-[#0048ac] font-bold text-center pt-10"

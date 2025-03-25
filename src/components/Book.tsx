@@ -9,37 +9,37 @@ const books = [
     title: "Integral",
     subtitle: "Matematicas para enfermos",
     author: "Mtro..........",
-    image: "https://placehold.co/400x600",
+    image: "7.jpg",
   },
   {
     title: "Integral",
     subtitle: "Doctor house",
     author: "Mtro..........",
-    image: "https://placehold.co/400x600",
+    image: "8.jpg",
   },
   {
     title: "Integral ",
     subtitle: "Literas",
     author: "Mtro..........",
-    image: "https://placehold.co/400x600",
+    image: "9.jpg",
   },
   {
     title: "Integral",
     subtitle: "Matematicas para enfermos",
     author: "Mtro..........",
-    image: "https://placehold.co/400x600",
+    image: "6.jpg",
   },
   {
     title: "Integral",
     subtitle: "Doctor house",
     author: "Mtro..........",
-    image: "https://placehold.co/400x600",
+    image: "10.jpeg",
   },
   {
     title: "Integral ",
     subtitle: "Literas",
     author: "Mtro..........",
-    image: "https://placehold.co/400x600",
+    image: "7.jpg",
   },
 ];
 

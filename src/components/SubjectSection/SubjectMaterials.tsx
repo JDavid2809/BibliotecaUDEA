@@ -7,32 +7,32 @@ export default function MateriasGrid() {
     const materias = [
         {
             title: "Integral",
-            image: "https://placehold.co/60",
+            image: "8.jpg",
             instructor: "Mtro............",
         },
         {
             title: "Neuralgia",
-            image: "https://placehold.co/60",
+            image: "10.jpeg",
             instructor: "Mtro............",
         },
         {
             title: "Diabetes",
-            image: "https://placehold.co/60",
+            image: "7.jpg",
             instructor: "Mtro............",
         },
         {
             title: "Articulador-estoma",
-            image: "https://placehold.co/60",
+            image: "6.jpg",
             instructor: "Mtro............",
         },
         {
             title: "Anatomia humana",
-            image: "https://placehold.co/60",
+            image: "9.jpg",
             instructor: "Mtro............",
         },
         {
             title: "Integral",
-            image: "https://placehold.co/60",
+            image: "10.jpeg",
             instructor: "Mtro............",
         },
     ]
@@ -95,7 +95,7 @@ export default function MateriasGrid() {
                     <h2 className="text-2xl font-bold mb-5">¡Siempre hay algo nuevo!</h2>
                     <div className="relative h-56 mb-5">
                         <img
-                            src="https://placehold.co/60"
+                            src="UdeaPrincipal.jpg"
                             alt="Nuevos cursos"
                             className="w-full h-full object-cover rounded-md"
                         />

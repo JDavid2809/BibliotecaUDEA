@@ -21,7 +21,7 @@ const BookDetailSection: React.FC = () => {
             className="flex-shrink-0 flex justify-center"
             >
             <img
-                src="https://placehold.co/200x250"
+                src="8.jpg"
                 alt="Portada del libro"
                 className="w-80 h-auto object-cover rounded"
             />

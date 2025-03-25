@@ -52,7 +52,7 @@ const TableDesign = () => {
             {/* Botón agregar usuario + Input búsqueda */}
             <div className="flex justify-between items-center mb-6 mt-12">
                 <button 
-                    className="bg-green-600 text-white px-5 py-3 text-lg rounded-md flex items-center gap-2 hover:bg-green-800"
+                    className="bg-green-600 text-white px-5 py-3 text-lg rounded-xl flex items-center gap-2 hover:bg-green-800"
                     onClick={handleAddeUser}
                 >
                     <UserPlus size={24} />

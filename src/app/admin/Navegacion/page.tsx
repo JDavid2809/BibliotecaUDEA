@@ -54,7 +54,7 @@ const Navigation: React.FC = () => {
   };
 
   const seleccionarMateria = () => {
-    router.push("/admin/books"); // Redirige a la página /books
+    router.push("/admin/books");
   };
 
   const volverAtras = () => {

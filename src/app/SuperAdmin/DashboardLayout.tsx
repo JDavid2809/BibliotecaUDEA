@@ -37,7 +37,7 @@ export default function SuperDashboardLayout({ children }: { children: React.Rea
     {
       id: "books",
       path: "/SuperAdmin/Navegacion",
-      title: "Libros",
+      title: "Libros /  Carrera",
       icon: <BookMarked  className="h-5 w-5" />,
       description: "Administración de libros",
       color: "from-green-500 to-emerald-500",

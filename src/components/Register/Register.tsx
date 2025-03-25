@@ -4,6 +4,8 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { User, Mail, Lock, Phone, IdCard } from "lucide-react";
 import { motion } from "framer-motion"; 
+import { toast } from "nextjs-toast-notify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function RegisterPage() {
   const router = useRouter();
@@ -23,7 +25,14 @@ function RegisterPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.matricula || !formData.nombre || !formData.telefono || !formData.email || !formData.password) {
-      alert("Por favor, completa todos los campos.");
+      toast.error("¡Necesitas llenar todos los campos!", {
+        duration: 4000,
+        progress: true,
+        position: "top-center",
+        transition: "bounceIn",
+        icon: '',
+        sound: true,
+      });
       return;
     }
     router.push("/verification");
@@ -180,8 +189,8 @@ function RegisterPage() {
         </div>
 
         {/* Imagen decorativa */}
-        <div className="md:h-full bg-[#000842] rounded-xl lg:p-12 p-8">
-          <img src="https://readymadeui.com/signin-image.webp" className="w-full h-full object-contain" alt="login-image" />
+        <div className="md:h-full rounded-xl lg:p-12 p-8">
+          <img src="UdeaLogin.jpg" className="w-full h-full rounded-xl object-contain" alt="login-image" />
         </div>
       </div>
     </motion.div>
