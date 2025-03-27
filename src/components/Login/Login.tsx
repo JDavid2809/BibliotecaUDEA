@@ -1,151 +1,208 @@
-"use client";
+"use client"
 
-import { useRouter } from "next/navigation";
-import React, { useState } from "react";
-import { IdCard, Lock } from "lucide-react";
-import Link from "next/link";
-import { motion } from "framer-motion"; 
-import { toast } from "nextjs-toast-notify";
-import 'react-toastify/dist/ReactToastify.css';
+import { useRouter } from "next/navigation"
+import { useState } from "react"
+import { IdCard, Lock, Eye, EyeOff } from "lucide-react"
+import Link from "next/link"
+import { motion } from "framer-motion"
+import { useForm } from "react-hook-form"
+import { yupResolver } from "@hookform/resolvers/yup"
+import * as yup from "yup"
+import Image from "next/image"
+import { Swiper, SwiperSlide } from "swiper/react"
+import "swiper/css"
+import "swiper/css/pagination"
+import "swiper/css/effect-fade"
+import { Pagination, Autoplay, EffectFade } from "swiper/modules"
+import { toast } from "nextjs-toast-notify"
+import "react-toastify/dist/ReactToastify.css"
 
+// 🛡️ Validación con Yup
+const schema = yup.object().shape({
+  matricula: yup
+    .string()
+    .matches(/^[a-zA-Z0-9]+$/, "Solo letras y números")
+    .length(8, "Debe tener 8 dígitos")
+    .required("La matrícula es obligatoria"),
+  password: yup
+    .string()
+    .min(6, "Debe tener al menos 6 caracteres")
+    .max(20, "Máximo 20 caracteres")
+    .matches(/^[a-zA-Z0-9]+$/, "Solo letras y números")
+    .required("La contraseña es obligatoria"),
+})
 
 function LoginPage() {
-  const router = useRouter();
-  const [formData, setFormData] = useState({
-    matricula: "",
-    password: "",
-  });
+  const router = useRouter()
+  const [showPassword, setShowPassword] = useState(false)
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ resolver: yupResolver(schema) })
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  interface FormData {
+    matricula: string
+    password: string
+  }
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!formData.matricula || !formData.password) {
-      toast.error("¡Necesitas llenar todos los campos!", {
-            duration: 4000,
-            progress: true,
-            position: "top-center",
-            transition: "bounceIn",
-            icon: '',
-            sound: true,
-          });
-      return;
-    }
-    router.push("/pageArea");
-    toast.success("¡Se inicio sesión correctamente!", {
+  const onSubmit = (data: FormData) => {
+    console.log("Datos válidos:", data)
+    router.push("/pageArea")
+    toast.success("¡La operación se realizó con éxito!", {
       duration: 4000,
       progress: true,
       position: "top-center",
       transition: "bounceIn",
-      icon: '',
+      icon: "",
       sound: true,
-    });
-  };
+    })
+  }
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword)
+  }
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 50 }} 
-      animate={{ opacity: 1, y: 0 }} 
-      transition={{ duration: 0.6, ease: "easeOut" }} 
-      className="font-[sans-serif] min-h-screen flex items-center justify-center bg-white"
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className="font-[sans-serif] min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100"
     >
-      <div className="grid md:grid-cols-2 items-center gap-4 max-md:gap-8 max-w-6xl max-md:max-w-lg w-full p-6 m-4 shadow-lg rounded-md">
+      <div className="grid md:grid-cols-2 items-center gap-0 max-w-6xl w-full mx-auto my-8 overflow-hidden rounded-2xl shadow-2xl bg-white">
         {/* Formulario */}
-        <div className="md:max-w-md w-full px-6 py-6">
-          <form onSubmit={handleSubmit}>
-            <div className="mb-12 flex items-center justify-between">
-              <h3 className="text-gray-800 text-3xl font-extrabold text-center w-full">
-                Inicio de sesión
-              </h3>
-              <img src="/udeaLogo2.jpg" alt="Logo" className="w-20 h-20 ml-auto" />
+        <div className="w-full px-8 py-10 md:px-12">
+          <div className="mb-8 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <Image src="/udeaLogo2.jpg" alt="Logo" width={60} height={60} className="rounded-lg shadow-md" />
+              <h3 className="text-gray-800 text-3xl font-bold">Bienvenido</h3>
+            </div>
+          </div>
+
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            <div className="text-center mb-8">
+              <h2 className="text-2xl font-extrabold text-gray-900 mb-1">Inicio de sesión</h2>
+              <p className="text-gray-500">Ingresa tus credenciales para continuar</p>
             </div>
 
             {/* Matrícula */}
-            <div>
-              <label className="text-gray-800 text-base block mb-2">Matrícula:</label>
-              <div className="relative flex items-center">
+            <div className="space-y-2">
+              <label className="text-gray-700 font-medium block">Matrícula</label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                  <IdCard className="text-gray-400" size={20} />
+                </div>
                 <input
-                  name="matricula"
+                  {...register("matricula")}
                   type="text"
-                  required
-                  value={formData.matricula}
-                  onChange={handleChange}
-                  className="w-full pr-8 text-gray-800 text-lg border-b border-gray-300 focus:border-blue-600 px-2 py-3 outline-none"
+                  className={`w-full pl-10 pr-4 py-3 text-gray-800 bg-gray-50 border ${errors.matricula ? "border-red-300 focus:ring-red-500" : "border-gray-200 focus:ring-blue-500"} rounded-lg focus:outline-none focus:ring-2 transition-all duration-200`}
                   placeholder="Ingresa tu matrícula"
                 />
-                <IdCard className="absolute right-2 text-gray-500" size={24} />
               </div>
+              {errors.matricula && <p className="text-red-500 text-sm font-medium">{errors.matricula.message}</p>}
             </div>
 
             {/* Contraseña */}
-            <div className="mt-8">
-              <label className="text-gray-800 text-base block mb-2">Contraseña:</label>
-              <div className="relative flex items-center">
-                <input
-                  name="password"
-                  type="password"
-                  required
-                  value={formData.password}
-                  onChange={handleChange}
-                  className="w-full pr-8 text-gray-800 text-lg border-b border-gray-300 focus:border-blue-600 px-2 py-3 outline-none"
-                  placeholder="Ingresa tu contraseña"
-                />
-                <Lock className="absolute right-2 text-gray-500" size={24} />
-              </div>
-            </div>
-
-            {/* Opciones adicionales */}
-            <div className="flex flex-wrap items-center justify-between gap-4 mt-6">
-              <div className="flex items-center">
-                <input
-                  id="remember-me"
-                  name="remember-me"
-                  type="checkbox"
-                  className="h-4 w-4 shrink-0 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                />
-                <label htmlFor="remember-me" className="ml-3 block text-sm text-gray-800">
-                  Recuérdame
-                </label>
-              </div>
-              <div>
-                <a href="#" className="text-blue-600 font-semibo ld text-sm hover:underline">
+            <div className="space-y-2">
+              <div className="flex justify-between">
+                <label className="text-gray-700 font-medium block">Contraseña</label>
+                <a href="#" className="text-blue-600 text-sm font-medium hover:text-blue-800 transition-colors">
                   ¿Olvidaste tu contraseña?
                 </a>
               </div>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                  <Lock className="text-gray-400" size={20} />
+                </div>
+                <input
+                  {...register("password")}
+                  type={showPassword ? "text" : "password"}
+                  className={`w-full pl-10 pr-12 py-3 text-gray-800 bg-gray-50 border ${errors.password ? "border-red-300 focus:ring-red-500" : "border-gray-200 focus:ring-blue-500"} rounded-lg focus:outline-none focus:ring-2 transition-all duration-200`}
+                  placeholder="Ingresa tu contraseña"
+                />
+                <button
+                  type="button"
+                  onClick={togglePasswordVisibility}
+                  className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600"
+                >
+                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                </button>
+              </div>
+              {errors.password && <p className="text-red-500 text-sm font-medium">{errors.password.message}</p>}
+            </div>
+
+            {/* Opciones adicionales */}
+            <div className="flex items-center">
+              <input
+                id="remember-me"
+                name="remember-me"
+                type="checkbox"
+                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+              />
+              <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-700">
+                Recuérdame
+              </label>
             </div>
 
             {/* Botón de acceso */}
-            <div className="mt-12 flex justify-center">
-              <button
-                type="submit"
-                className="w-full shadow-xl py-3 px-4 text-lg tracking-wide rounded-xl  text-white bg-[#0048ac] hover:bg-[#03003f] focus:outline-none transition-all duration-300 transform hover:scale-105"
-              >
-                Iniciar sesión
-              </button>
-            </div>
+            <motion.button
+              type="submit"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="w-full py-3 px-4 text-base font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 shadow-lg transition-all duration-200"
+            >
+              Iniciar sesión
+            </motion.button>
 
-            <p className="text-sm mt-4 text-gray-800 text-center">
-              ¿No tienes cuenta?
-              <Link href="/registro" className="text-blue-600 font-semibold hover:underline ml-1">
+            <p className="text-sm mt-4 text-gray-600 text-center">
+              ¿No tienes cuenta?{" "}
+              <Link href="/registro" className="text-blue-600 font-semibold hover:text-blue-800 transition-colors">
                 Regístrate aquí
               </Link>
             </p>
           </form>
         </div>
 
-        {/* Imagen lateral */}
-        <div className="md:h-full rounded-xl lg:p-12 p-8">
-          <img
-            src="UdeaLogin.jpg"
-            className="w-full h-full object-contain rounded-xl"
-            alt="Login illustration"
-          />
+        {/* Carrusel de imágenes */}
+        <div className="hidden md:block h-full bg-gradient-to-br from-blue-800 to-indigo-900 rounded-l-none rounded-r-2xl">
+          <div className="h-full flex flex-col justify-center p-8">
+            <div className="text-white mb-8 px-4">
+              <h2 className="text-3xl font-bold mb-3">UDEA Biblioteca Virtual</h2>
+              <p className="text-blue-100 text-lg">
+                Accede a tu portal académico y gestiona tus estudios de manera eficiente.
+              </p>
+            </div>
+
+            <Swiper
+              modules={[Pagination, Autoplay, EffectFade]}
+              pagination={{ clickable: true }}
+              autoplay={{ delay: 4000, disableOnInteraction: false }}
+              effect="fade"
+              className="w-full h-[300px] rounded-xl overflow-hidden shadow-2xl"
+            >
+              <SwiperSlide>
+                <div className="relative w-full h-full">
+                  <Image src="/home.jpg" fill alt="Campus universitario" className="object-cover" />
+                </div>
+              </SwiperSlide>
+              <SwiperSlide>
+                <div className="relative w-full h-full">
+                  <Image src="/UdeaPrincipal.jpg" fill alt="Biblioteca" className="object-cover" />
+                </div>
+              </SwiperSlide>
+              <SwiperSlide>
+                <div className="relative w-full h-full">
+                  <Image src="/UdeaLogin.jpg" fill alt="Laboratorios" className="object-cover" />
+                </div>
+              </SwiperSlide>
+            </Swiper>
+          </div>
         </div>
       </div>
     </motion.div>
-  );
+  )
 }
 
-export default LoginPage;
+export default LoginPage
+

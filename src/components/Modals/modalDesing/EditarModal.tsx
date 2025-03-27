@@ -1,6 +1,6 @@
 import React from "react";
 import ModalDesign from "./ModalDesign";
-import { X } from "lucide-react";
+
 
 interface EditModalProps {
   isOpen: boolean;

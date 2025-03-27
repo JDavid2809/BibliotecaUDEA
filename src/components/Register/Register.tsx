@@ -6,6 +6,7 @@ import { User, Mail, Lock, Phone, IdCard } from "lucide-react";
 import { motion } from "framer-motion"; 
 import { toast } from "nextjs-toast-notify";
 import 'react-toastify/dist/ReactToastify.css';
+import Image from "next/image";
 
 function RegisterPage() {
   const router = useRouter();
@@ -53,7 +54,7 @@ function RegisterPage() {
               <h3 className="text-gray-800 text-3xl font-extrabold text-center w-full">
                 Registro
               </h3>
-              <img src="/udeaLogo2.jpg" alt="Logo" className="w-20 h-20 ml-auto" />
+              <Image src="/udeaLogo2.jpg" alt="Logo" width={80} height={80} className="ml-auto" />
             </div>
 
             {/* Matrícula */}
@@ -189,9 +190,15 @@ function RegisterPage() {
         </div>
 
         {/* Imagen decorativa */}
-        <div className="md:h-full rounded-xl lg:p-12 p-8">
-          <img src="UdeaLogin.jpg" className="w-full h-full rounded-xl object-contain" alt="login-image" />
+        <div className="md:h-full rounded-xl lg:p-12 p-8 relative w-full h-[400px]">
+          <Image 
+            src="/UdeaLogin.jpg" 
+            alt="login-image" 
+            fill 
+            className="rounded-xl object-cover" 
+          />
         </div>
+
       </div>
     </motion.div>
   );

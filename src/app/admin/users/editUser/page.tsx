@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useRef } from "react";
-import { User, Phone, Calendar, Mail, Lock, Save, Trash2, Edit } from "lucide-react"; // Importamos los iconos de lucide-react
+import { User, Phone, Mail, Lock, Save, Trash2, Edit } from "lucide-react"; // Importamos los iconos de lucide-react
+import Image from "next/image";
 
 const EditarUsuario: React.FC = () => {
     // Referencia para el input de archivo (foto de perfil)
@@ -14,7 +15,6 @@ const EditarUsuario: React.FC = () => {
             const reader = new FileReader();
             reader.onload = (e) => {
                 const image = e.target?.result as string;
-                // Aquí puedes guardar la imagen en el estado o enviarla al servidor
                 console.log("Nueva foto de perfil:", image);
             };
             reader.readAsDataURL(file);
@@ -43,9 +43,11 @@ const EditarUsuario: React.FC = () => {
                             onChange={handleFileChange}
                         />
                         {/* Imagen de perfil */}
-                        <img
-                            src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png" // URL de la foto de perfil
+                        <Image
+                            src="/9.jpg" // URL de la foto de perfil
                             alt="Foto de perfil"
+                            width={80}
+                            height={80} 
                             className="w-80 h-80 rounded-full object-cover" // Tamaño más grande (80x80)
                             style={{ aspectRatio: "1/1" }} // Asegura que sea completamente circular
                         />

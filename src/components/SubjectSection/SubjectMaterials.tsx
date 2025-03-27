@@ -2,37 +2,38 @@
 
 import Link from "next/link"
 import { motion } from "framer-motion"
+import Image from "next/image"
 
 export default function MateriasGrid() {
     const materias = [
         {
             title: "Integral",
-            image: "8.jpg",
+            image: "/10.jpeg",
             instructor: "Mtro............",
         },
         {
             title: "Neuralgia",
-            image: "10.jpeg",
+            image: "/9.jpg",
             instructor: "Mtro............",
         },
         {
             title: "Diabetes",
-            image: "7.jpg",
+            image: "/8.jpg",
             instructor: "Mtro............",
         },
         {
             title: "Articulador-estoma",
-            image: "6.jpg",
+            image: "/7.jpg",
             instructor: "Mtro............",
         },
         {
             title: "Anatomia humana",
-            image: "9.jpg",
+            image: "/8.jpg",
             instructor: "Mtro............",
         },
         {
             title: "Integral",
-            image: "10.jpeg",
+            image: "/9.jpg",
             instructor: "Mtro............",
         },
     ]
@@ -64,9 +65,11 @@ export default function MateriasGrid() {
                             transition={{ duration: 0.5, delay: index * 0.1 }}
                         >
                             <div className="relative h-52">
-                                <img
+                                <Image
                                     src={materia.image || "/placeholder.svg"}
                                     alt={materia.title}
+                                    width={200}
+                                    height={200}
                                     className="w-full h-full object-cover rounded-md"
                                 />
                             </div>
@@ -94,9 +97,11 @@ export default function MateriasGrid() {
                 >
                     <h2 className="text-2xl font-bold mb-5">¡Siempre hay algo nuevo!</h2>
                     <div className="relative h-56 mb-5">
-                        <img
-                            src="UdeaPrincipal.jpg"
+                        <Image
+                            src="/8.jpg"
                             alt="Nuevos cursos"
+                            width={200}
+                            height={200}
                             className="w-full h-full object-cover rounded-md"
                         />
                     </div>

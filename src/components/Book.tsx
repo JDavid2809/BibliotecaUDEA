@@ -3,43 +3,44 @@ import { Eye } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const books = [
   {
     title: "Integral",
     subtitle: "Matematicas para enfermos",
     author: "Mtro..........",
-    image: "7.jpg",
+    image: "/7.jpg",
   },
   {
     title: "Integral",
     subtitle: "Doctor house",
     author: "Mtro..........",
-    image: "8.jpg",
+    image: "/8.jpg",
   },
   {
     title: "Integral ",
     subtitle: "Literas",
     author: "Mtro..........",
-    image: "9.jpg",
+    image: "/9.jpg",
   },
   {
     title: "Integral",
     subtitle: "Matematicas para enfermos",
     author: "Mtro..........",
-    image: "6.jpg",
+    image: "/10.jpeg",
   },
   {
     title: "Integral",
     subtitle: "Doctor house",
     author: "Mtro..........",
-    image: "10.jpeg",
+    image: "/7.jpg",
   },
   {
     title: "Integral ",
     subtitle: "Literas",
     author: "Mtro..........",
-    image: "7.jpg",
+    image: "/8.jpg",
   },
 ];
 
@@ -63,15 +64,15 @@ export default function Book() {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
-            whileHover={{ scale: 1.08, transition: { duration: 0.15 } }} // Hover más rápido y fluido
+            whileHover={{ scale: 1.08, transition: { duration: 0.15 } }} 
             >
-            <img src={book.image} alt={book.title} className="w-full h-80 object-cover" />
+            <Image src={book.image} alt={book.title} width={200} height={200} className="w-full h-80 object-cover" />
             {hoveredBook === index && (
                 <motion.div
                 className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-30"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 0.2 }} // Hacer que el icono aparezca más rápido
+                transition={{ duration: 0.2 }} 
                 >
                 <span className="text-white text-lg">
                     <Eye size={40} />

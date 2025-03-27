@@ -1,4 +1,3 @@
-import Link from "next/link";
 import React from "react";
 import Seccion1 from "./pageHome/SectionArea";
 import Seccion2 from "./pageHome/SectionWelcome";

@@ -7,8 +7,7 @@ import { Bell, User, Search, BookMarked } from "lucide-react";
 import SemestresModal from "./Modals/SemestresModal";
 import Link from "next/link";
 
-const modals = ["notifications", "profile", "semesters"] as const;
-type ModalType = (typeof modals)[number] | null;
+type ModalType = "notifications" | "profile" | "semesters" | null;
 
 const Navbar = () => {
   const [activeModal, setActiveModal] = useState<ModalType>(null);

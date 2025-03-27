@@ -1,5 +1,5 @@
 import React from "react";
-import { Plus, ChevronRight,  ArrowLeft} from "lucide-react";
+import { ChevronRight,  ArrowLeft} from "lucide-react";
 
 /* Usamos un tipo genérico <T> para hacer que ListaNavegacion sea más flexible y escalable.
  En lugar de restringirnos a un solo tipo (Item), permitimos que cualquier tipo con { id, nombre } sea válido.
@@ -19,7 +19,6 @@ type ListaNavegacionProps<T extends { id: number; nombre: string }> = {
     items,
     onSelect,
     onBack,
-    onAgregar,
   }: ListaNavegacionProps<T>) => {
   return (
     <div className="bg-gray-50 min-h-screen p-4">
@@ -32,12 +31,6 @@ type ListaNavegacionProps<T extends { id: number; nombre: string }> = {
 )}
       </div>
 
-      <button
-        onClick={onAgregar}
-        className="bg-green-500 text-white flex items-center px-4 py-2 rounded-full mb-4 shadow-md"
-      >
-        <Plus className="mr-2" size={20} /> Agregar
-      </button>
 
       <div className="space-y-4">
         {items.map((item) => (

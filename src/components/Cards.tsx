@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React, { useState } from 'react';
 // Asegúrese de que el estado de hoveredCard pueda aceptar tanto números como valores nulos
 
@@ -38,7 +39,7 @@ const SemestresSection = () => {
             onMouseLeave={() => setHoveredCard(null)}
           >
             <div className="relative h-80">
-              <img 
+              <Image
                 src="/api/placeholder/400/400"
                 alt="Students"
                 className="w-full h-full object-cover"

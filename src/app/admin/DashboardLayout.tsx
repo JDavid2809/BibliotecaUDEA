@@ -2,9 +2,9 @@
 
 import type React from "react"
 
-import { useState, useRef, useEffect } from "react"
+import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { LayoutDashboard, Users, ShoppingCart, Settings, ChevronLeft, Menu, BookMarked, IdCard } from "lucide-react"
+import { LayoutDashboard, ChevronLeft, Menu, BookMarked } from "lucide-react"
 import { useRouter, usePathname } from "next/navigation"
 import Link from "next/link"
 
@@ -15,7 +15,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const [isSidebarOpen, setIsSidebarOpen] = useState(true)
   const [selectedOption, setSelectedOption] = useState<number | null>(null)
   const [isTransitioning, setIsTransitioning] = useState(false)
-  const cardRefs = useRef<(HTMLDivElement | null)[]>([])
 
   const menuItems = [
     {
@@ -36,6 +35,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     },
   ]
 
+  // Determinar si una ruta está activa
   const isActive = (path: string) => {
     return pathname === path
   }
@@ -175,7 +175,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
                   >
-                    Bienvenido, Administrator
+                    Bienvenido, Super-Administrator
                   </motion.h1>
                   <motion.p
                     className="text-xl text-gray-900"

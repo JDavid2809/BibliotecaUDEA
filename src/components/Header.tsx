@@ -3,7 +3,7 @@ import { usePathname } from "next/navigation"
 import type React from "react"
 
 import Link from "next/link"
-import { ChevronRight, Home, Book, BookOpen, LayoutDashboard, Settings, Users } from "lucide-react"
+import { ChevronRight, Home, Book, BookOpen, LayoutDashboard, Settings, User, UserPlus, BookPlus, UserPen, ShieldAlert } from "lucide-react"
 
 const Header: React.FC = () => {
   const pathname = usePathname()
@@ -15,6 +15,14 @@ const Header: React.FC = () => {
     pageArea: { name: "Bienvenida", icon: <Home className="h-5 w-5" /> },
     pageAdmin: { name: "Administración", icon: <LayoutDashboard className="h-5 w-5" /> },
     pageSuperAdmin: { name: "Super-Administración", icon: <Settings className="h-5 w-5" /> },
+    SuperAdmin: { name: "Super-Administración", icon: <Settings className="h-5 w-5" /> },
+    books: { name: "Libros", icon: <Book className="h-5 w-5" /> },
+    addBook: { name: "Añadir nuevo libro", icon: <BookPlus className="h-5 w-5" /> },
+    editBook: { name: "Editar libro", icon: <BookPlus className="h-5 w-5" /> },
+    users: { name: "Usuarios", icon: <User className="h-5 w-5" /> },
+    addUser: { name: "Crear nuevo usuario", icon: <UserPlus className="h-5 w-5" /> },
+    editUser: { name: "Editar usuario", icon: <UserPen className="h-5 w-5" /> },
+    verification: { name: "Verificación", icon: <ShieldAlert  className="h-5 w-5" /> },
   }
 
   const rutas = pathname

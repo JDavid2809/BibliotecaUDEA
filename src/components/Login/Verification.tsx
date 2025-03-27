@@ -1,9 +1,8 @@
 "use client"
 
-import { Lock, IdCard } from "lucide-react";
-import Link from "next/link";
 import { motion } from "framer-motion"; 
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 
 function VerificationPage() {
@@ -62,8 +61,10 @@ function VerificationPage() {
             </div>
 
             <div className="hidden md:block md:h-full bg-[#03003f] rounded-xl p-6 md:p-12">
-            <img
-                src="https://readymadeui.com/signin-image.webp"
+            <Image
+                src="/udeaLogo2.jpg"
+                width={80} 
+                height={80}
                 className="w-full h-full object-cover rounded-xl"
                 alt="Verification illustration"
             />

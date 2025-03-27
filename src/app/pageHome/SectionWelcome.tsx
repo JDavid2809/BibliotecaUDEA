@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import Modal from '@/components/Modals/CardModal'; // Asegúrate de importar el componente Modal
+import Image from 'next/image';
 
 const Seccion2 = () => {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
@@ -10,15 +11,15 @@ const Seccion2 = () => {
 
   const cards = [
     {
-      image: "8.jpg",
+      image: "/8.jpg",
       options: "Saber más.."
     },
     {
-      image: "7.jpg",
+      image: "/7.jpg",
       options: "Saber más.."
     },
     {
-      image: "6.jpg",
+      image: "/6.jpg",
       options: "Saber más.."
     }
   ];
@@ -59,9 +60,11 @@ const Seccion2 = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: index * 0.2 }}
           >
-            <img
+            <Image
               src={card.image}
               alt="Imagen"
+              width={200}
+              height={150}
               className="w-full h-80 object-cover transition-transform duration-300 transform hover:scale-105"
             />
             <div

@@ -2,20 +2,19 @@
 
 import type React from "react"
 
-import { useState, useRef, useEffect } from "react"
+import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { LayoutDashboard, Users, ShoppingCart, Settings, ChevronLeft, Menu, BookMarked, IdCard } from "lucide-react"
+import { LayoutDashboard, Users,ChevronLeft, Menu, BookMarked, IdCard } from "lucide-react"
 import { useRouter, usePathname } from "next/navigation"
 import Link from "next/link"
 
-export default function SuperDashboardLayout({ children }: { children: React.ReactNode }) {
+export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter()
   const pathname = usePathname()
   const [showWelcome, setShowWelcome] = useState(true)
   const [isSidebarOpen, setIsSidebarOpen] = useState(true)
   const [selectedOption, setSelectedOption] = useState<number | null>(null)
   const [isTransitioning, setIsTransitioning] = useState(false)
-  const cardRefs = useRef<(HTMLDivElement | null)[]>([])
 
   const menuItems = [
     {
@@ -37,7 +36,7 @@ export default function SuperDashboardLayout({ children }: { children: React.Rea
     {
       id: "books",
       path: "/SuperAdmin/Navegacion",
-      title: "Libros /  Carrera",
+      title: "Libros",
       icon: <BookMarked  className="h-5 w-5" />,
       description: "Administración de libros",
       color: "from-green-500 to-emerald-500",
@@ -68,9 +67,9 @@ export default function SuperDashboardLayout({ children }: { children: React.Rea
   }
 
   useEffect(() => {
-    if (pathname === "/SuperAdmin") {
+    if (pathname === "/admin") {
       setShowWelcome(true)
-    } else if (pathname.startsWith("/SuperAdmin/")) {
+    } else if (pathname.startsWith("/admin/")) {
       setShowWelcome(false)
     }
   }, [pathname])

@@ -2,7 +2,8 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Star, StarHalf, Download, Eye } from "lucide-react";
+import {  Eye } from "lucide-react";
+import Image from "next/image";
 
 const BookDetailSection: React.FC = () => {
     return (
@@ -20,11 +21,13 @@ const BookDetailSection: React.FC = () => {
             transition={{ delay: 0.3, duration: 0.5 }}
             className="flex-shrink-0 flex justify-center"
             >
-            <img
-                src="8.jpg"
-                alt="Portada del libro"
-                className="w-80 h-auto object-cover rounded"
-            />
+                <Image
+                    src="/8.jpg"
+                    width={200}
+                    height={200}
+                    alt="Portada del libro"
+                    className="w-80 h-auto object-cover rounded"
+                />
             </motion.div>
 
             <motion.div
