@@ -79,6 +79,21 @@ const AddUser: React.FC = () => {
                             />
                         </div>
                     </div>
+                    {/* Campo: Area  */}
+                    <div className="mt-8">
+                    <label className="text-gray-800 text-base block mb-2">Carrera:</label>
+                    <div className="relative">
+                        <select
+                        name="carrera"
+                        className="w-full border border-gray-300 rounded-lg px-4 py-3 text-lg bg-white focus:ring-2 focus:ring-blue-600 transition-all duration-300 ease-in-out"
+                        >
+                        <option value="Estomatología">Estomatología</option>
+                        <option value="Fisioterapia">Fisioterapia</option>
+                        <option value="Enfermería">Enfermería</option>
+                        <option value="Nutrición">Nutrición</option>
+                        </select>
+                    </div>
+                    </div>
 
                     {/* Campo: Teléfono */}
                     <div className="mb-6">

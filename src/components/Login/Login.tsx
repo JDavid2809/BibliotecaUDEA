@@ -22,7 +22,7 @@ const schema = yup.object().shape({
   matricula: yup
     .string()
     .matches(/^[a-zA-Z0-9]+$/, "Solo letras y números")
-    .length(8, "Debe tener 8 dígitos")
+    .length(11, "Debe tener 11 dígitos")
     .required("La matrícula es obligatoria"),
   password: yup
     .string()

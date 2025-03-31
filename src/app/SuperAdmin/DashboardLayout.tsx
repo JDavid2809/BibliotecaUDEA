@@ -19,7 +19,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const menuItems = [
     {
       id: "dashboard",
-      path: "/pageSuperAdmin",
+      path: "/SuperAdmin",
       title: "Dashboard",
       icon: <LayoutDashboard className="h-5 w-5" />,
       description: "Acciones que puedes realizar",
@@ -67,9 +67,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   }
 
   useEffect(() => {
-    if (pathname === "/admin") {
+    if (pathname === "/SuperAdmin") {
       setShowWelcome(true)
-    } else if (pathname.startsWith("/admin/")) {
+    } else if (pathname.startsWith("/SuperAdmin/")) {
       setShowWelcome(false)
     }
   }, [pathname])
