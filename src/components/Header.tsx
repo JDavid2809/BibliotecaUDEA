@@ -11,7 +11,7 @@ const Header: React.FC = () => {
   const mapeo: Record<string, { name: string; icon: React.ReactNode }> = {
     pageSubject: { name: "Materias", icon: <BookOpen className="h-5 w-5" /> },
     pageLibrary: { name: "Libros", icon: <Book className="h-5 w-5" /> },
-    pageBook: { name: "Detalles del libro", icon: <Book className="h-5 w-5" /> },
+    pageBook: { name: "Libros", icon: <Book className="h-5 w-5" /> },
     pageArea: { name: "Bienvenida", icon: <Home className="h-5 w-5" /> },
     pageAdmin: { name: "Administración", icon: <LayoutDashboard className="h-5 w-5" /> },
     pageSuperAdmin: { name: "Super-Administración", icon: <Settings className="h-5 w-5" /> },

@@ -1,38 +1,24 @@
-"use client"; // Asegura que el componente sea un Client Component
+"use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BookCheck, FilePenLine, ScanEye, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 
-// Datos de los libros
-const libros = [
-  {
-    imagen: "/8.jpg", // Imagen almacenada en la carpeta public
-    nombre: "Interestelar",
-    autor: "Pancho",
-    descripcion:
-      "Una emocionante historia de viajes espaciales y exploración interestelar.",
-  },
-  {
-    imagen: "/8.jpg",
-    nombre: "Cosmos",
-    autor: "Carl Sagan",
-    descripcion:
-      "Un viaje al conocimiento del universo explicado de manera magistral.",
-  },
-  {
-    imagen: "/8.jpg",
-    nombre: "Breve historia del tiempo",
-    autor: "Stephen Hawking",
-    descripcion:
-      "Una exploración accesible sobre el tiempo, el espacio y el universo.",
-  },
-];
+interface Libro {
+  nombre: string;
+  autor: string;
+  descripcion: string;
+}
 
-// Componente para representar un libro
+// Datos que vienen de la API
+interface LibroAPI {
+  nombreLibro: string;
+  autor: string;
+  descripcion: string;
+}
+
 const LibroItem: React.FC<{
-  libro: (typeof libros)[0];
+  libro: Libro;
   onEditar: () => void;
   onEliminar: () => void;
 }> = ({ libro, onEditar, onEliminar }) => {
@@ -41,18 +27,14 @@ const LibroItem: React.FC<{
   const handleEditBook = () => {
     router.push("/admin/books/editBook");
   };
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-6 gap-4 p-4 border-b last:border-b-0 hover:bg-gray-50 transition-colors">
-      {/* Imagen y nombre del libro */}
-
+      {/* Título */}
       <div className="sm:col-span-2 flex items-center">
-        <Image
-          src={libro.imagen}
-          alt={`Portada de ${libro.nombre}`}
-          width={96}
-          height={96}
-          className="w-24 h-24 object-cover rounded-md mr-4"
-        />
+        <div className="w-16 h-16 flex items-center justify-center bg-gray-300 rounded-md mr-4 font-bold text-white">
+          {libro.nombre.charAt(0).toUpperCase()}
+        </div>
         <div>
           <span className="text-gray-800 block font-semibold">
             {libro.nombre}
@@ -61,17 +43,17 @@ const LibroItem: React.FC<{
         </div>
       </div>
 
-      {/* Autor (oculto en móviles) */}
+      {/* Autor */}
       <div className="hidden sm:flex items-center">
         <span className="text-gray-600">{libro.autor}</span>
       </div>
 
-      {/* Descripción (oculta en móviles) */}
+      {/* Descripción */}
       <div className="hidden sm:flex items-center">
         <p className="text-gray-600 text-sm">{libro.descripcion}</p>
       </div>
 
-      {/* Acciones (Editar y Eliminar) */}
+      {/* Acciones */}
       <div className="sm:col-span-2 flex items-center justify-center sm:justify-end space-x-4">
         <button
           className="text-blue-500 hover:text-blue-700 transition-colors"
@@ -93,7 +75,7 @@ const LibroItem: React.FC<{
         </button>
       </div>
 
-      {/* Descripción visible solo en móviles */}
+      {/* Descripción móvil */}
       <div className="sm:hidden col-span-full">
         <p className="text-gray-600 text-sm">{libro.descripcion}</p>
       </div>
@@ -101,8 +83,10 @@ const LibroItem: React.FC<{
   );
 };
 
-// Componente principal
 const App: React.FC = () => {
+  const [libros, setLibros] = useState<Libro[]>([]);
+  const router = useRouter();
+
   const handleEliminar = (nombreLibro: string) => {
     alert(`Eliminar: ${nombreLibro}`);
   };
@@ -111,10 +95,30 @@ const App: React.FC = () => {
     alert(`Editar: ${nombreLibro}`);
   };
 
-  const router = useRouter();
   const handleAddBook = () => {
     router.push("/admin/books/addBook");
   };
+
+  useEffect(() => {
+    const fetchLibros = async () => {
+      try {
+        const res = await fetch("http://localhost:4000/api/books/getBooks");
+        const data: LibroAPI[] = await res.json();
+
+        const adaptados: Libro[] = data.map((libro) => ({
+          nombre: libro.nombreLibro.replaceAll('"', ''),
+          autor: libro.autor.replaceAll('"', ''),
+          descripcion: libro.descripcion.replaceAll('"', ''),
+        }));
+
+        setLibros(adaptados);
+      } catch (error) {
+        console.error("Error al cargar los libros:", error);
+      }
+    };
+
+    fetchLibros();
+  }, []);
 
   return (
     <div className="font-sans bg-gray-100 min-h-screen p-5">

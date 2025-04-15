@@ -1,8 +1,8 @@
-import DetailsBook from '@/components/DetailsBook'
+import LibrarySection from '@/components/LibrarySection/librarySection'
 import React from 'react'
 
 export default function page() {
-    return (
-        <DetailsBook/>
-    )
+  return (
+    <LibrarySection/>
+  )
 }

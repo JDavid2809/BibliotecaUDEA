@@ -107,9 +107,6 @@ function LoginPage() {
             <div className="space-y-2">
               <div className="flex justify-between">
                 <label className="text-gray-700 font-medium block">Contraseña</label>
-                <a href="#" className="text-blue-600 text-sm font-medium hover:text-blue-800 transition-colors">
-                  ¿Olvidaste tu contraseña?
-                </a>
               </div>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -130,19 +127,6 @@ function LoginPage() {
                 </button>
               </div>
               {errors.password && <p className="text-red-500 text-sm font-medium">{errors.password.message}</p>}
-            </div>
-
-            {/* Opciones adicionales */}
-            <div className="flex items-center">
-              <input
-                id="remember-me"
-                name="remember-me"
-                type="checkbox"
-                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-              />
-              <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-700">
-                Recuérdame
-              </label>
             </div>
 
             {/* Botón de acceso */}
