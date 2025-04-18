@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Eye } from "lucide-react";
@@ -70,12 +71,13 @@ export default function Book() {
           whileHover={{ scale: 1.08, transition: { duration: 0.15 } }}
         >
           <Image
-            src={`http://localhost:4000${book.image}`}
-            alt={book.title}
-            width={200}
-            height={200}
-            className="w-full h-80 object-cover"
-          />
+  src={`http://localhost:4000${book.image.startsWith("/") ? book.image : "/" + book.image}`}
+  alt={book.title}
+  width={200}
+  height={200}
+  className="w-full h-80 object-cover"
+/>
+
 
           {hoveredBook === index && (
             <motion.div

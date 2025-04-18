@@ -23,6 +23,8 @@ const Header: React.FC = () => {
     addUser: { name: "Crear nuevo usuario", icon: <UserPlus className="h-5 w-5" /> },
     editUser: { name: "Editar usuario", icon: <UserPen className="h-5 w-5" /> },
     verification: { name: "Verificación", icon: <ShieldAlert  className="h-5 w-5" /> },
+    editProfile: { name: "Editar perfil", icon: <UserPen  className="h-5 w-5" /> },
+    
   }
 
   const rutas = pathname
