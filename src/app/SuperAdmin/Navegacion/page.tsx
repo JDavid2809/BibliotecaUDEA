@@ -60,7 +60,7 @@ const Navigation: React.FC = () => {
                 id: materia.id,
                 nombre: materia.nombreMateria,
               })),
-            })),
+            })),  
           }));
         } catch (error) {
           console.error("Error al obtener semestres:", error);
@@ -206,7 +206,12 @@ const Navigation: React.FC = () => {
           fkIdArea,
         });
 
-        const nuevaMateria = response.data;
+        const nuevaMateria = {
+          id: response.data.idMateria || response.data.id,
+          nombre: response.data.nombreMateria || response.data.nombre,
+        };
+
+        // Actualizar el estado del semestre y renderizar correctamente
         setSemestre((prevSemestre) => {
           if (!prevSemestre) return prevSemestre;
           const nuevasMaterias = [...(prevSemestre.materias || []), nuevaMateria];
@@ -220,6 +225,8 @@ const Navigation: React.FC = () => {
     fkIdArea={carrera.idArea}
   />
 )}
+
+
 
     </>
   );
