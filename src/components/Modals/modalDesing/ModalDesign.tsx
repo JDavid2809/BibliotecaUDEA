@@ -12,7 +12,7 @@ const ModalDesign: React.FC<ModalDesignProps> = ({
   
 }) => {
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
       <div className="bg-white rounded-lg shadow-lg p-6 w-[450px]">
         <h2 className="text-center text-xl font-bold text-gray-800">{title}</h2>
         <div className="mt-4">{children}</div>

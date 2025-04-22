@@ -47,16 +47,18 @@ const ListaNavegacion = <T extends { id: number; nombre: string }>({
       )}
 
       <div className="space-y-4">
-        {items.map((item) => (
-          <button
-            key={item.id}
-            onClick={() => onSelect(item)}
-            className="w-full text-left border border-gray-400 rounded-lg p-4 bg-white flex justify-between items-center shadow-sm"
-          >
-            <span className="text-lg">{item.nombre}</span>
-            <ChevronRight className="text-blue-700" size={20} />
-          </button>
-        ))}
+      {items.map((item, index) => (
+        
+  <button
+    key={item.id || index}  // Usa el índice si el id no está disponible
+    onClick={() => onSelect(item)}
+    className="w-full text-left border border-gray-400 rounded-lg p-4 bg-white flex justify-between items-center shadow-sm"
+  >
+    <span className="text-lg">{item.nombre}</span>
+    <ChevronRight className="text-blue-700" size={20} />
+  </button>
+))}
+    
       </div>
     </div>
   );
