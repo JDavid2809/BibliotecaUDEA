@@ -37,10 +37,10 @@ export default function Book() {
 
         const adaptedBooks: Book[] = data.map((book) => ({
           id: book.idLibro,
-          title: book.nombreLibro.replaceAll('"', ''),
-          subtitle: book.descripcion.replaceAll('"', ''),
-          author: book.autor.replaceAll('"', ''),
-          image: book.portadaUrl,
+          title: (book.nombreLibro || "").replaceAll('"', ''),
+          subtitle: (book.descripcion || "").replaceAll('"', ''),
+          author: (book.autor || "").replaceAll('"', ''),
+          image: book.portadaUrl || "/default-image.jpg", // opción segura si no hay imagen
         }));
 
         setBooks(adaptedBooks);

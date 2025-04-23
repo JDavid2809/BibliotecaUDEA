@@ -29,11 +29,11 @@ const BookDetailSection: React.FC = () => {
         const data = await res.json();
 
         const cleanBook: BookDetail = {
-          nombreLibro: data.nombreLibro.replaceAll('"', ''),
-          autor: data.autor.replaceAll('"', ''),
-          descripcion: data.descripcion.replaceAll('"', ''),
-          portadaUrl: data.portadaUrl,
-          archivoUrl: data.archivoUrl,
+          nombreLibro: (data.nombreLibro || "").replaceAll('"', ''),
+          autor: (data.autor || "").replaceAll('"', ''),
+          descripcion: (data.descripcion || "").replaceAll('"', ''),
+          portadaUrl: data.portadaUrl || "/default-image.jpg",
+          archivoUrl: data.archivoUrl || "",
         };
 
         setBook(cleanBook);

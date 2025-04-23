@@ -74,11 +74,10 @@ const App: React.FC = () => {
 
       const adaptados: Libro[] = data.map((libro) => ({
         idLibro: libro.idLibro,
-        nombre: libro.nombreLibro.replaceAll('"', ''),
-        autor: libro.autor.replaceAll('"', ''),
-        descripcion: libro.descripcion.replaceAll('"', ''),
+        nombre: (libro.nombreLibro ?? "").replaceAll('"', ''),
+        autor: (libro.autor ?? "").replaceAll('"', ''),
+        descripcion: (libro.descripcion ?? "").replaceAll('"', ''),
       }));
-
       setLibros(adaptados);
     } catch (error) {
       console.error("Error al cargar los libros:", error);
