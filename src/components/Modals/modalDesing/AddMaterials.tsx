@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 import ModalDesign from "./ModalDesign";
 import { Lock, X, Save } from "lucide-react";
 
@@ -21,7 +20,7 @@ const AddMaterials: React.FC<AddModalProps> = ({
   const [newItem, setNewItem] = useState("");
   const [isLoading, setIsLoading] = useState(false); 
   const [errorMessage, setErrorMessage] = useState<string | null>(null); 
-  const [isAdded, setIsAdded] = useState(false);  // Estado para bloquear el botón
+  const [isAdded, setIsAdded] = useState(false);
 
   const handleAdd = async () => {
     if (isLoading || isAdded) {
@@ -30,7 +29,7 @@ const AddMaterials: React.FC<AddModalProps> = ({
     }
 
     setIsLoading(true);
-    setErrorMessage(null); 
+    setErrorMessage(null);
 
     if (!newItem.trim()) {
       setErrorMessage("El nombre del material es obligatorio.");
@@ -51,23 +50,21 @@ const AddMaterials: React.FC<AddModalProps> = ({
     }
 
     try {
-      const response = await axios.post("http://localhost:4000/api/materias", {
+      // Solo pasamos los datos al padre, que hará la petición
+      onAdd({
         nombreMateria: newItem,
         fkIdSemestre,
         fkIdArea,
       });
 
-      const materiaCreada = response.data;
-      setNewItem(""); // Limpiar el campo
-      onAdd(materiaCreada); 
-
-      setIsAdded(true); // Marcar que la materia fue agregada
-      onClose(); // Cerrar el modal
+      setNewItem("");
+      setIsAdded(true);
+      onClose();
     } catch (error) {
       console.error("Error al agregar materia:", error);
-      setErrorMessage("Hubo un error al agregar el material. Inténtalo de nuevo.");
+      setErrorMessage("Hubo un error al procesar el material. Inténtalo de nuevo.");
     } finally {
-      setIsLoading(false); 
+      setIsLoading(false);
     }
   };
 
@@ -106,7 +103,7 @@ const AddMaterials: React.FC<AddModalProps> = ({
         <button
           onClick={handleAdd}
           className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-400 flex items-center"
-          disabled={isLoading || isAdded}  // Deshabilitar si ya fue agregada
+          disabled={isLoading || isAdded}
         >
           <Save size={20} className="mr-2" />
           {isLoading ? "Cargando..." : isAdded ? "Materia Agregada" : "Agregar"}

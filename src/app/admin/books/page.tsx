@@ -3,15 +3,17 @@
 import React, { useEffect, useState } from "react";
 import { BookCheck, FilePenLine, ScanEye, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { toast } from "nextjs-toast-notify";
 
 interface Libro {
+  idLibro: string;
   nombre: string;
   autor: string;
   descripcion: string;
 }
 
-// Datos que vienen de la API
 interface LibroAPI {
+  idLibro: string;
   nombreLibro: string;
   autor: string;
   descripcion: string;
@@ -22,60 +24,38 @@ const LibroItem: React.FC<{
   onEditar: () => void;
   onEliminar: () => void;
 }> = ({ libro, onEditar, onEliminar }) => {
-  const router = useRouter();
-
-  const handleEditBook = () => {
-    router.push("/admin/books/editBook");
-  };
-
   return (
     <div className="grid grid-cols-1 sm:grid-cols-6 gap-4 p-4 border-b last:border-b-0 hover:bg-gray-50 transition-colors">
-      {/* Título */}
       <div className="sm:col-span-2 flex items-center">
         <div className="w-16 h-16 flex items-center justify-center bg-gray-300 rounded-md mr-4 font-bold text-white">
           {libro.nombre.charAt(0).toUpperCase()}
         </div>
         <div>
-          <span className="text-gray-800 block font-semibold">
-            {libro.nombre}
-          </span>
+          <span className="text-gray-800 block font-semibold">{libro.nombre}</span>
           <span className="text-gray-600 block sm:hidden">{libro.autor}</span>
         </div>
       </div>
 
-      {/* Autor */}
       <div className="hidden sm:flex items-center">
         <span className="text-gray-600">{libro.autor}</span>
       </div>
 
-      {/* Descripción */}
       <div className="hidden sm:flex items-center">
         <p className="text-gray-600 text-sm">{libro.descripcion}</p>
       </div>
 
-      {/* Acciones */}
       <div className="sm:col-span-2 flex items-center justify-center sm:justify-end space-x-4">
-        <button
-          className="text-blue-500 hover:text-blue-700 transition-colors"
-          onClick={onEditar}
-        >
+        <button className="text-blue-500 hover:text-blue-700 transition-colors" onClick={onEditar}>
           <ScanEye size={24} />
         </button>
-        <button
-          className="text-green-500 hover:text-[#008000] transition-colors"
-          onClick={handleEditBook}
-        >
+        <button className="text-green-500 hover:text-[#008000] transition-colors" onClick={onEditar}>
           <FilePenLine size={24} />
         </button>
-        <button
-          className="text-red-500 hover:text-red-700 transition-colors"
-          onClick={onEliminar}
-        >
+        <button className="text-red-500 hover:text-red-700 transition-colors" onClick={onEliminar}>
           <Trash2 size={24} />
         </button>
       </div>
 
-      {/* Descripción móvil */}
       <div className="sm:hidden col-span-full">
         <p className="text-gray-600 text-sm">{libro.descripcion}</p>
       </div>
@@ -87,12 +67,46 @@ const App: React.FC = () => {
   const [libros, setLibros] = useState<Libro[]>([]);
   const router = useRouter();
 
-  const handleEliminar = (nombreLibro: string) => {
-    alert(`Eliminar: ${nombreLibro}`);
+  const fetchLibros = async () => {
+    try {
+      const res = await fetch("http://localhost:4000/api/books/getBooks");
+      const data: LibroAPI[] = await res.json();
+
+      const adaptados: Libro[] = data.map((libro) => ({
+        idLibro: libro.idLibro,
+        nombre: (libro.nombreLibro ?? "").replaceAll('"', ''),
+        autor: (libro.autor ?? "").replaceAll('"', ''),
+        descripcion: (libro.descripcion ?? "").replaceAll('"', ''),
+      }));
+      setLibros(adaptados);
+    } catch (error) {
+      console.error("Error al cargar los libros:", error);
+    }
   };
 
-  const handleEditar = (nombreLibro: string) => {
-    alert(`Editar: ${nombreLibro}`);
+  const handleEliminar = async (idLibro: string) => {
+    const confirm = window.confirm("¿Estás seguro de que deseas eliminar este libro?");
+    if (!confirm) return;
+
+    try {
+      const res = await fetch(`http://localhost:4000/api/books/deleteBook/${idLibro}`, {
+        method: "DELETE",
+      });
+
+      if (res.ok) {
+        toast.success("Libro eliminado correctamente");
+        setLibros((prev) => prev.filter((libro) => libro.idLibro !== idLibro));
+      } else {
+        toast.error("Error al eliminar el libro");
+      }
+    } catch (err) {
+      toast.error("No se pudo conectar con el servidor");
+      console.error(err);
+    }
+  };
+
+  const handleEditar = (idLibro: string) => {
+    router.push(`/admin/books/editBook?id=${idLibro}`);
   };
 
   const handleAddBook = () => {
@@ -100,23 +114,6 @@ const App: React.FC = () => {
   };
 
   useEffect(() => {
-    const fetchLibros = async () => {
-      try {
-        const res = await fetch("http://localhost:4000/api/books/getBooks");
-        const data: LibroAPI[] = await res.json();
-
-        const adaptados: Libro[] = data.map((libro) => ({
-          nombre: libro.nombreLibro.replaceAll('"', ''),
-          autor: libro.autor.replaceAll('"', ''),
-          descripcion: libro.descripcion.replaceAll('"', ''),
-        }));
-
-        setLibros(adaptados);
-      } catch (error) {
-        console.error("Error al cargar los libros:", error);
-      }
-    };
-
     fetchLibros();
   }, []);
 
@@ -146,10 +143,10 @@ const App: React.FC = () => {
 
         {libros.map((libro) => (
           <LibroItem
-            key={libro.nombre}
+            key={libro.idLibro}
             libro={libro}
-            onEditar={() => handleEditar(libro.nombre)}
-            onEliminar={() => handleEliminar(libro.nombre)}
+            onEditar={() => handleEditar(libro.idLibro)}
+            onEliminar={() => handleEliminar(libro.idLibro)}
           />
         ))}
       </div>

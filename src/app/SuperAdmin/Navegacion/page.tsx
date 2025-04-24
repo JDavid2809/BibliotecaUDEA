@@ -7,6 +7,8 @@ import AgregaCarrera from "../../../components/Modals/modalDesing/AgregaCarrera"
 import AgregaSemestres from "../../../components/Modals/modalDesing/AgregaSemestres";
 import AgregaMateria from "../../../components/Modals/modalDesing/AddMaterials";
 import axios from "axios";
+import Swal from "sweetalert2";
+
 
 type Materia = { id: number; nombre: string };
 type Semestre = { id: number; nombre: string; materias: Materia[] };
@@ -77,20 +79,34 @@ const Navigation: React.FC = () => {
 
   // ✅ Agregar carrera
   const agregarCarrera = async ({ nombreArea }: { nombreArea: string }) => {
-      try {
-        const response = await axios.post("http://localhost:4000/api/area/createArea", {
-          nombreArea,
-        });
-        const nuevaCarrera = {
-          ...response.data.area,
-          idArea: response.data.area.idArea ?? response.data.area.id,
-          id: response.data.area.idArea ?? response.data.area.id,
-        };
-        setCarreras([...carreras, nuevaCarrera]);
-      } catch (error) {
-        console.error("Error al agregar carrera:", error);
-      }
-    };
+    try {
+      const response = await axios.post("http://localhost:4000/api/area/createArea", {
+        nombreArea,
+      });
+      const nuevaCarrera = {
+        ...response.data.area,
+        idArea: response.data.area.idArea ?? response.data.area.id,
+        id: response.data.area.idArea ?? response.data.area.id,
+      };
+      setCarreras([...carreras, nuevaCarrera]);
+  
+      Swal.fire({
+        icon: "success",
+        title: "Área registrada",
+        text: `Se registró el área "${nombreArea}" correctamente.`,
+        timer: 2000,
+        showConfirmButton: false,
+      });
+    } catch (error) {
+      console.error("Error al agregar carrera:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error al registrar",
+        text: "No se pudo registrar el área. Inténtalo nuevamente.",
+      });
+    }
+  };
+  
 
   // ✅ Agregar semestre
   const agregarSemestre = async ({ nombreSemestre, fkIdArea }: { nombreSemestre: string; fkIdArea: number }) => {
