@@ -78,7 +78,7 @@ export default function MateriasGrid() {
                                 <p className="text-gray-600 mb-4 text-base">{materia.instructor}</p>
                                 <div className="flex justify-center">
                                     <Link
-                                        href="/pageLibrary"
+                                        href="/estudiante/pageLibrary"
                                         className="inline-block bg-[#0048ac] text-white font-semibold px-5 py-2 rounded-full hover:bg-[#02013f] transition-colors text-base"
                                     >
                                         VER MÁS

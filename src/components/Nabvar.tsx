@@ -20,7 +20,7 @@ const Navbar = () => {
       <nav className="flex flex-wrap items-center justify-between bg-white shadow-md px-4 md:px-8 py-3 border-b border-gray-200 rounded-br-2xl rounded-bl-2xl">
         {/* Logo */}
         <div className="flex items-center space-x-4">
-          <Link href="/pageArea">
+          <Link href="/estudiante">
             <Image
               src="/udea.png"
               alt="UDEA Logo"

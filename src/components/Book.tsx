@@ -53,7 +53,7 @@ export default function Book() {
   }, []);
 
   const handlerPage = (id: number) => {
-    router.push(`/pageBook/${id}`);
+    router.push(`/estudiante/pageBook/${id}`);
   };
 
   return (

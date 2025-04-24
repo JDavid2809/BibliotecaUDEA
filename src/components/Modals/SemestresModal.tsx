@@ -13,7 +13,7 @@ const SemestersModal: React.FC<SemestersModalProps> = ({ isOpen, onClose }) => {
     const router = useRouter();
 
     const handleSemesterClick = () => {
-        router.push(`/pageSubject`);
+        router.push(`/estudiante/pageSubject`);
         onClose();
     };
     const semesters = ["Semestre 1", "Semestre 2", "Semestre 3", "Semestre 4", "Semestre 5"];

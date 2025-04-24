@@ -43,7 +43,7 @@ const Header: React.FC = () => {
           <ul className="flex flex-wrap items-center gap-2 text-base">
             <li className="flex items-center">
               <Link
-                href="/pageArea"
+                href="/estudiante"
                 className="flex items-center gap-2 rounded-full px-4 py-2 transition-all hover:bg-white/20 hover:shadow-md"
               >
                 <div className="bg-white/10 p-1.5 rounded-full">

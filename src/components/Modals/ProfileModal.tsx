@@ -12,7 +12,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) => {
   const router = useRouter();
 
   const handleEditProfile = () => {
-    router.push("/editProfile");
+    router.push("/estudiante/editProfile");
     onClose();
   };
 
