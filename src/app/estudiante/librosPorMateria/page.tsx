@@ -1,8 +1,7 @@
-import SubjectMaterials from '@/components/SubjectSection/SubjectMaterials'
-import React from 'react'
+'use client'
 
-export default function page() {
-  return (
-    <SubjectMaterials/>
-  )
+import SubjectMaterials from '@/components/SubjectSection/SubjectMaterials'
+
+export default function Page() {
+  return <SubjectMaterials />
 }

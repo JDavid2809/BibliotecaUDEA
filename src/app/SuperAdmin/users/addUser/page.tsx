@@ -1,58 +1,109 @@
-"use client";
+"use client"
 
-import { useRouter } from "next/navigation";
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { toast } from "react-toastify";
-import { User, Save, Trash2 } from "lucide-react";
+import { useRouter } from "next/navigation"
+import type React from "react"
+import { useState, useEffect } from "react"
+import { toast } from "nextjs-toast-notify"
+import { User, Save, Trash2 } from "lucide-react"
 
 const AddUser: React.FC = () => {
-  const router = useRouter();
-  const [loading, setLoading] = useState(false);
-  const [areas, setAreas] = useState<{ id: number; nombreArea: string }[]>([]); // Lista de áreas
+  const router = useRouter()
+  const [loading, setLoading] = useState(false)
+  const [areas, setAreas] = useState<{ id: number; nombreArea: string }[]>([])
   const [formData, setFormData] = useState({
     nombre: "",
     telefono: "",
     email: "",
     password: "",
-    carrera: "", // Inicialmente vacío
-  });
+    carrera: "",
+  })
+  const [errors, setErrors] = useState({
+    nombre: "",
+    telefono: "",
+    email: "",
+    password: "",
+    carrera: "",
+  })
 
-  // Cargar áreas desde el backend
   useEffect(() => {
     const fetchAreas = async () => {
       try {
-        const response = await axios.get("http://localhost:4000/api/area");
-        console.log("Datos recibidos del backend:", response.data);
-        setAreas(response.data);
-
-        // Actualiza el estado de `formData` solo si hay áreas disponibles
-        if (response.data.length > 0) {
-          setFormData((prev) => ({ ...prev, carrera: response.data[0].nombreArea }));
+        const response = await fetch("http://localhost:4000/api/area")
+        const data = await response.json()
+        setAreas(data)
+        if (data.length > 0) {
+          setFormData((prev) => ({ ...prev, carrera: data[0].nombreArea }))
         }
       } catch (error) {
-        console.error("Error al cargar áreas:", error);
-        toast.error("Error al cargar las áreas.");
+        console.error("Error al cargar áreas:", error)
+        toast.error("Error al cargar las áreas.")
       }
-    };
+    }
 
-    fetchAreas();
-  }, []);
+    fetchAreas()
+  }, [])
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  const validateField = (name: string, value: string): string => {
+    switch (name) {
+      case "nombre":
+        return !value.trim() ? "El nombre es obligatorio." : ""
+      case "telefono":
+        if (!value.trim()) return "El teléfono es obligatorio."
+        if (value.length !== 10 || !/^\d+$/.test(value))
+          return "El teléfono debe tener exactamente 10 dígitos numéricos."
+        return ""
+      case "email":
+        if (!value.trim()) return "El correo es obligatorio."
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return "El correo no es válido."
+        return ""
+      case "password":
+        if (!value.trim()) return "La contraseña es obligatoria."
+        if (value.length < 6) return "La contraseña debe tener al menos 6 caracteres."
+        return ""
+      case "carrera":
+        return !value.trim() ? "La carrera es obligatoria." : ""
+      default:
+        return ""
+    }
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target
+    setFormData({ ...formData, [name]: value })
+
+    // Validar el campo cuando cambia
+    const errorMessage = validateField(name, value)
+    setErrors((prev) => ({ ...prev, [name]: errorMessage }))
+  }
+
+  const validateForm = (): boolean => {
+    let isValid = true
+    const newErrors = { ...errors }
+
+    // Validar todos los campos
+    Object.keys(formData).forEach((key) => {
+      const value = formData[key as keyof typeof formData]
+      const errorMessage = validateField(key, value)
+      newErrors[key as keyof typeof errors] = errorMessage
+      if (errorMessage) isValid = false
+    })
+
+    setErrors(newErrors)
+    return isValid
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    const { nombre, telefono, email, password, carrera } = formData;
+    // Validar todo el formulario antes de enviar
+    if (!validateForm()) {
+      toast.error("Por favor, rellena los campos del formulario correctamente.")
+      return
+    }
 
-    // Encuentra el ID del área seleccionada
-    const areaSeleccionada = areas.find((area) => area.nombreArea === carrera);
-    const areaId = areaSeleccionada ? areaSeleccionada.id : null;
+    const { nombre, telefono, email, password, carrera } = formData
+    const areaSeleccionada = areas.find((area) => area.nombreArea === carrera)
+    const areaId = areaSeleccionada ? areaSeleccionada.id : null
 
     const requestData = {
       nombre,
@@ -60,42 +111,33 @@ const AddUser: React.FC = () => {
       correo: email,
       password,
       area: areaId,
-    };
-
-    console.log("Datos enviados al backend:", requestData);
-
-    // Validaciones básicas
-    if (!nombre || !telefono || !email || !password || !carrera) {
-      toast.error("Todos los campos son obligatorios.");
-      return;
-    }
-
-    if (telefono.length !== 10) {
-      toast.error("El teléfono debe tener 10 dígitos.");
-      return;
-    }
-
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      toast.error("El correo no es válido.");
-      return;
     }
 
     try {
-      setLoading(true);
-      await axios.post("http://localhost:4000/api/administrador/createAdmin", requestData);
-      toast.success("¡Registro exitoso!");
-      router.push("/LoginAdmin");
-    } catch (error: unknown) {
-      console.error("Error al registrar:", error);
-      const msg =
-        axios.isAxiosError(error) && error.response?.data?.errors?.[0]?.msg
-          ? error.response.data.errors[0].msg
-          : "Error al registrar.";
-      toast.error(msg);
+      setLoading(true)
+      const res = await fetch("http://localhost:4000/api/administrador/createAdmin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(requestData),
+      })
+
+      const data = await res.json()
+
+      if (!res.ok) {
+        const errorMsg = data?.errors?.[0]?.msg || data?.msg || "Error al registrar."
+        toast.error(errorMsg)
+        return
+      }
+
+      toast.success("¡Registro exitoso!")
+      router.push("/SuperAdmin/users")
+    } catch (error) {
+      console.error("Error al registrar:", error)
+      toast.error("Error de conexión al registrar.")
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   return (
     <div className="font-sans bg-gray-100 min-h-screen p-5">
@@ -109,14 +151,12 @@ const AddUser: React.FC = () => {
           </div>
         </div>
 
-        <form
-          onSubmit={handleSubmit}
-          className="w-full md:w-2/3 bg-white rounded-lg shadow-md p-8"
-        >
+        <form onSubmit={handleSubmit} className="w-full md:w-2/3 bg-white rounded-lg shadow-md p-8">
           <div className="flex justify-between items-center mb-8">
             <h1 className="text-gray-800 text-2xl font-bold">Agregar nuevo usuario</h1>
           </div>
 
+          {/* Nombre */}
           <div className="mb-6">
             <label className="block text-gray-700 font-semibold mb-2">Nombre</label>
             <input
@@ -125,17 +165,23 @@ const AddUser: React.FC = () => {
               value={formData.nombre}
               onChange={handleChange}
               placeholder="Nombre del usuario"
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+              className={`w-full p-2 border ${
+                errors.nombre ? "border-red-500" : "border-gray-300"
+              } rounded-md focus:outline-none focus:border-blue-500`}
             />
+            {errors.nombre && <p className="text-red-500 text-sm mt-1">{errors.nombre}</p>}
           </div>
 
+          {/* Área */}
           <div className="mb-6">
             <label className="block text-gray-700 font-semibold mb-2">Área</label>
             <select
               name="carrera"
               value={formData.carrera}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+              className={`w-full p-2 border ${
+                errors.carrera ? "border-red-500" : "border-gray-300"
+              } rounded-md focus:outline-none focus:border-blue-500`}
             >
               {areas.map((area) => (
                 <option key={area.id} value={area.nombreArea}>
@@ -143,8 +189,10 @@ const AddUser: React.FC = () => {
                 </option>
               ))}
             </select>
+            {errors.carrera && <p className="text-red-500 text-sm mt-1">{errors.carrera}</p>}
           </div>
 
+          {/* Teléfono */}
           <div className="mb-6">
             <label className="block text-gray-700 font-semibold mb-2">Teléfono</label>
             <input
@@ -153,10 +201,14 @@ const AddUser: React.FC = () => {
               value={formData.telefono}
               onChange={handleChange}
               placeholder="Número telefónico"
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+              className={`w-full p-2 border ${
+                errors.telefono ? "border-red-500" : "border-gray-300"
+              } rounded-md focus:outline-none focus:border-blue-500`}
             />
+            {errors.telefono && <p className="text-red-500 text-sm mt-1">{errors.telefono}</p>}
           </div>
 
+          {/* Email */}
           <div className="mb-6">
             <label className="block text-gray-700 font-semibold mb-2">Correo electrónico</label>
             <input
@@ -165,10 +217,14 @@ const AddUser: React.FC = () => {
               value={formData.email}
               onChange={handleChange}
               placeholder="Correo electrónico"
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+              className={`w-full p-2 border ${
+                errors.email ? "border-red-500" : "border-gray-300"
+              } rounded-md focus:outline-none focus:border-blue-500`}
             />
+            {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
           </div>
 
+          {/* Password */}
           <div className="mb-6">
             <label className="block text-gray-700 font-semibold mb-2">Contraseña</label>
             <input
@@ -177,10 +233,14 @@ const AddUser: React.FC = () => {
               value={formData.password}
               onChange={handleChange}
               placeholder="Contraseña"
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+              className={`w-full p-2 border ${
+                errors.password ? "border-red-500" : "border-gray-300"
+              } rounded-md focus:outline-none focus:border-blue-500`}
             />
+            {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
           </div>
 
+          {/* Botones */}
           <div className="flex justify-end space-x-4">
             <button
               type="button"
@@ -206,7 +266,7 @@ const AddUser: React.FC = () => {
         </form>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default AddUser;
+export default AddUser

@@ -56,7 +56,7 @@ export default function Seccion1() {
     }, [displayText, handleTyping, typingSpeed])
 
     const handleClick = () => {
-        router.push("/pageSubject")
+        router.push("/estudiante/pageSubject")
     }
 
     return (
