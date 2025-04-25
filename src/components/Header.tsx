@@ -3,7 +3,7 @@ import { usePathname } from "next/navigation"
 import type React from "react"
 
 import Link from "next/link"
-import { ChevronRight, Home, Book, BookOpen, LayoutDashboard, Settings, User, UserPlus, BookPlus, UserPen, ShieldAlert } from "lucide-react"
+import { ChevronRight, Home, Book, BookOpen, LayoutDashboard, Settings, User, UserPlus, BookPlus, UserPen, ShieldAlert, CircleUser } from "lucide-react"
 
 const Header: React.FC = () => {
   const pathname = usePathname()
@@ -24,7 +24,8 @@ const Header: React.FC = () => {
     editUser: { name: "Editar usuario", icon: <UserPen className="h-5 w-5" /> },
     verification: { name: "Verificación", icon: <ShieldAlert  className="h-5 w-5" /> },
     editProfile: { name: "Editar perfil", icon: <UserPen  className="h-5 w-5" /> },
-    
+    estudiante: { name: "Estudiante", icon: <CircleUser  className="h-5 w-5" /> },
+    librosPorMateria: { name: "Materias", icon: <Book className="h-5 w-5" /> },
   }
 
   const rutas = pathname

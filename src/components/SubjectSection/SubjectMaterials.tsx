@@ -1,42 +1,37 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import Image from "next/image"
 
+interface Materia {
+    idMateria: number
+    nombreMateria: string
+    area: {
+        nombreArea: string
+    }
+    semestre: {
+        nombreSemestre: string
+    }
+}
+
 export default function MateriasGrid() {
-    const materias = [
-        {
-            title: "Integral",
-            image: "/10.jpeg",
-            instructor: "Mtro............",
-        },
-        {
-            title: "Neuralgia",
-            image: "/9.jpg",
-            instructor: "Mtro............",
-        },
-        {
-            title: "Diabetes",
-            image: "/8.jpg",
-            instructor: "Mtro............",
-        },
-        {
-            title: "Articulador-estoma",
-            image: "/7.jpg",
-            instructor: "Mtro............",
-        },
-        {
-            title: "Anatomia humana",
-            image: "/8.jpg",
-            instructor: "Mtro............",
-        },
-        {
-            title: "Integral",
-            image: "/9.jpg",
-            instructor: "Mtro............",
-        },
-    ]
+    const [materias, setMaterias] = useState<Materia[]>([])
+
+    useEffect(() => {
+        const fetchMaterias = async () => {
+            try {
+                const res = await fetch("http://localhost:4000/api/materias/")
+                const data = await res.json()
+                setMaterias(data)
+            } catch (error) {
+                console.error("Error al cargar materias:", error)
+            }
+        }
+
+        fetchMaterias()
+    }, [])
 
     return (
         <motion.div 
@@ -58,7 +53,7 @@ export default function MateriasGrid() {
                 <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
                     {materias.map((materia, index) => (
                         <motion.div 
-                            key={index} 
+                            key={materia.idMateria} 
                             className="bg-white rounded-lg shadow-md overflow-hidden p-6"
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -66,23 +61,28 @@ export default function MateriasGrid() {
                         >
                             <div className="relative h-52">
                                 <Image
-                                    src={materia.image || "/placeholder.svg"}
-                                    alt={materia.title}
+                                    src="/portadaMateria.png"
+                                    alt={materia.nombreMateria}
                                     width={200}
                                     height={200}
                                     className="w-full h-full object-cover rounded-md"
                                 />
                             </div>
                             <div className="p-5">
-                                <h3 className="text-xl font-semibold mb-2">{materia.title}</h3>
-                                <p className="text-gray-600 mb-4 text-base">{materia.instructor}</p>
+                                <h3 className="text-xl font-semibold mb-2">{materia.nombreMateria}</h3>
+                                <p className="text-gray-600 mb-2 text-base">Área: {materia.area.nombreArea}</p>
+                                <p className="text-gray-600 mb-4 text-base">Semestre: {materia.semestre.nombreSemestre}</p>
                                 <div className="flex justify-center">
-                                    <Link
-                                        href="/estudiante/pageLibrary"
-                                        className="inline-block bg-[#0048ac] text-white font-semibold px-5 py-2 rounded-full hover:bg-[#02013f] transition-colors text-base"
+                                <Link
+                                    href={{
+                                        pathname: `/estudiante/librosPorMateria/${materia.idMateria}`,
+                                        query: { materiaNombre: materia.nombreMateria }
+                                    }}
+                                    className="inline-block bg-[#0048ac] text-white font-semibold px-5 py-2 rounded-full hover:bg-[#02013f] transition-colors text-base"
                                     >
-                                        VER MÁS
-                                    </Link>
+                                    VER MÁS
+                                </Link>
+
                                 </div>
                             </div>
                         </motion.div>

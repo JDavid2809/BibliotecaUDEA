@@ -48,7 +48,7 @@ function LoginPage() {
 
   const onSubmit = (data: FormData) => {
     console.log("Datos válidos:", data)
-    router.push("/pageArea")
+    router.push("/estudiante")
     toast.success("¡La operación se realizó con éxito!", {
       duration: 4000,
       progress: true,
