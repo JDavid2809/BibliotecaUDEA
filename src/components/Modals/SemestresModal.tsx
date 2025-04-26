@@ -33,7 +33,7 @@ interface SemestersModalProps {
 const SemestersModal: React.FC<SemestersModalProps> = ({ isOpen, onClose }) => {
   const router = useRouter()
   const [semesters, setSemesters] = useState<Semestre[]>([])
-  const [selectedSemester, setSelectedSemester] = useState<Semestre | null>(null)
+  // const [selectedSemester, setSelectedSemester] = useState<Semestre | null>(null)
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
@@ -59,21 +59,7 @@ const SemestersModal: React.FC<SemestersModalProps> = ({ isOpen, onClose }) => {
     const storedSemester = localStorage.getItem("selectedSemester")
     if (storedSemester) {
       try {
-        const semester: Semestre = JSON.parse(storedSemester)
-
-        // Fetch complete semester data to ensure we have materias
-        fetchCompleteSemesterData(semester.idSemestre)
-          .then((completeSemester) => {
-            if (completeSemester) {
-              setSelectedSemester(completeSemester)
-            } else {
-              setSelectedSemester(semester) // Fallback to stored data
-            }
-          })
-          .catch((error) => {
-            console.error("Error fetching complete semester data:", error)
-            setSelectedSemester(semester) // Fallback to stored data
-          })
+  
       } catch (error) {
         console.error("Error parsing stored semester:", error)
       }
@@ -106,7 +92,7 @@ const SemestersModal: React.FC<SemestersModalProps> = ({ isOpen, onClose }) => {
       const semesterToStore = completeSemester || semester
 
       // Guardar el semestre seleccionado en localStorage
-      localStorage.setItem("selectedSemester", JSON.stringify(semesterToStore))
+      // localStorage.setItem("selectedSemester", JSON.stringify(semesterToStore))
 
       // Log para ver si el semestre seleccionado es el correcto
       console.log("Semestre seleccionado: ", semesterToStore)
@@ -148,7 +134,7 @@ const SemestersModal: React.FC<SemestersModalProps> = ({ isOpen, onClose }) => {
       )}
 
       {/* Mostrar el semestre seleccionado y sus materias */}
-      {selectedSemester && (
+      {/* {selectedSemester && (
         <div className="mt-5">
           <h3 className="text-xl font-bold">Semestre seleccionado: {selectedSemester.nombreSemestre}</h3>
           {selectedSemester.materias && selectedSemester.materias.length > 0 ? (
@@ -163,7 +149,7 @@ const SemestersModal: React.FC<SemestersModalProps> = ({ isOpen, onClose }) => {
             <p className="mt-3 text-gray-500">No hay materias disponibles para este semestre.</p>
           )}
         </div>
-      )}
+      )} */}
     </ReusableModal>
   )
 }
