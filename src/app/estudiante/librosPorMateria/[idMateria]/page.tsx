@@ -2,7 +2,7 @@
 
 import { use } from "react"
 import { useRouter } from "next/navigation"
-import { ArrowLeft, Book, Eye, Search } from "lucide-react"
+import { ArrowLeft, Book, BookOpenText, Eye, Search } from "lucide-react"
 import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import Image from "next/image"
@@ -182,8 +182,8 @@ export default function LibrosPorMateriaPage({
                   <h2 className="text-lg font-bold text-gray-800 line-clamp-1">{book.title}</h2>
                   <p className="text-sm text-gray-600 mt-1 line-clamp-2">{book.subtitle}</p>
                   <div className="flex items-center mt-3">
-                    <Book size={16} className="text-[#0048ac] mr-2" />
-                    <p className="text-sm font-medium text-gray-700">{book.author}</p>
+                    <BookOpenText size={16} className="text-[#0048ac] mr-2" />
+                    <p className="text-sm font-medium text-[#03045e]">Autor: {book.author}</p>
                   </div>
                 </div>
               </motion.div>

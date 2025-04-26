@@ -1,10 +1,11 @@
-'use client'
+"use client"
 
 import { useEffect, useState, Suspense } from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import { useSearchParams } from "next/navigation"
+import { BookOpen, GraduationCap, Layers } from "lucide-react"
 
 interface Materia {
   idMateria: number
@@ -21,6 +22,7 @@ function MateriasGridContent() {
   const [materias, setMaterias] = useState<Materia[] | null>(null)
   const [selectedSemester, setSelectedSemester] = useState<string | null>(null)
   const [isClient, setIsClient] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const searchParams = useSearchParams()
 
   useEffect(() => {
@@ -57,6 +59,7 @@ function MateriasGridContent() {
   useEffect(() => {
     if (selectedSemester) {
       const fetchMaterias = async () => {
+        setIsLoading(true)
         try {
           const res = await fetch("http://localhost:4000/api/materias/")
           const data = await res.json()
@@ -68,6 +71,8 @@ function MateriasGridContent() {
         } catch (error) {
           console.error("Error al cargar materias:", error)
           setMaterias([]) // Ensure it's an empty array on error
+        } finally {
+          setIsLoading(false)
         }
       }
 
@@ -76,95 +81,166 @@ function MateriasGridContent() {
   }, [selectedSemester])
 
   return (
-    <motion.div
-        className="container mx-auto px-12 py-12"
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
+      <motion.div
+        className="container mx-auto px-4 md:px-6 lg:px-8 py-12"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
       >
-        <motion.h1
-          className="text-4xl font-bold mb-12 text-center"
+        <motion.div
+          className="mb-12 text-center"
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6 }}
         >
-          Materias {selectedSemester && `- ${selectedSemester}`}
-        </motion.h1>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-          <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-            {materias && materias.length > 0 ? (
-              materias.map((materia, index) => (
-                <motion.div
-                  key={materia.idMateria}
-                  className="bg-white rounded-lg shadow-md overflow-hidden p-6"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                >
-                  <div className="relative h-52">
-                    <Image
-                      src="/portadaMateria.png"
-                      alt={materia.nombreMateria}
-                      width={200}
-                      height={200}
-                      className="w-full h-full object-cover rounded-md"
-                    />
-                  </div>
-                  <div className="p-5">
-                    <h3 className="text-xl font-semibold mb-2">{materia.nombreMateria}</h3>
-                    <p className="text-gray-600 mb-2 text-base">Área: {materia.area?.nombreArea || "Sin área"}</p>
-                    <p className="text-gray-600 mb-4 text-base">
-                      Semestre: {materia.semestre?.nombreSemestre || "Sin semestre"}
-                    </p>
-                    <div className="flex justify-center">
-                      <Link
-                        href={{
-                          pathname: `/estudiante/librosPorMateria/${materia.idMateria}`,
-                          query: { materiaNombre: materia.nombreMateria },
-                        }}
-                        className="inline-block bg-[#0048ac] text-white font-semibold px-5 py-2 rounded-full hover:bg-[#02013f] transition-colors text-base"
-                      >
-                        VER MÁS
-                      </Link>
-                    </div>
-                  </div>
-                </motion.div>
-              ))
-            ) : (
-              <p className="text-center text-gray-500 col-span-full">No hay materias disponibles para este semestre.</p>
-            )}
-          </div>
-
-          <motion.div
-            className="bg-[#0048ac] text-white rounded-lg p-6"
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-          >
-            <h2 className="text-2xl font-bold mb-5">¡Siempre hay algo nuevo!</h2>
-            <div className="relative h-56 mb-5">
-              <Image
-                src="/8.jpg"
-                alt="Nuevos cursos"
-                width={200}
-                height={200}
-                className="w-full h-full object-cover rounded-md"
-              />
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#02013f] mb-3">Materias</h1>
+          {selectedSemester && (
+            <div className="inline-flex items-center gap-2 bg-[#0048ac]/10 px-4 py-2 rounded-full">
+              <GraduationCap className="text-[#0048ac] h-5 w-5" />
+              <span className="text-[#0048ac] font-medium">{selectedSemester}</span>
             </div>
-            <p className="text-gray-200 text-base">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et
-              dolore magna aliqua.
-            </p>
-          </motion.div>
-        </div>
+          )}
+        </motion.div>
+
+        {isLoading ? (
+          <div className="flex justify-center items-center h-64">
+            <div className="relative h-16 w-16">
+              <div className="absolute h-full w-full rounded-full bg-[#0048ac] opacity-75"></div>
+              <div className="relative rounded-full h-16 w-16 bg-[#0048ac] flex items-center justify-center">
+                <BookOpen className="h-8 w-8 text-white" />
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <motion.div
+              className="lg:col-span-2"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              {materias && materias.length > 0 ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {materias.map((materia) => (
+                    <div key={materia.idMateria} className="bg-white rounded-lg shadow-md overflow-hidden">
+                      <div className="h-40 relative">
+                        <Image
+                          src="/portadaMateria.png"
+                          alt={materia.nombreMateria}
+                          width={400}
+                          height={300}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div className="p-4">
+                        <h3 className="text-lg font-bold text-gray-800 mb-3">{materia.nombreMateria}</h3>
+
+                        <div className="space-y-2 mb-4">
+                          <div className="flex items-center gap-2">
+                            <div className="h-6 w-6 rounded-full bg-[#0048ac]/10 flex items-center justify-center">
+                              <Layers className="h-3 w-3 text-[#0048ac]" />
+                            </div>
+                            <p className="text-gray-600 text-sm">{materia.area?.nombreArea || "Sin área"}</p>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <div className="h-6 w-6 rounded-full bg-[#0048ac]/10 flex items-center justify-center">
+                              <GraduationCap className="h-3 w-3 text-[#0048ac]" />
+                            </div>
+                            <p className="text-gray-600 text-sm">
+                              {materia.semestre?.nombreSemestre || "Sin semestre"}
+                            </p>
+                          </div>
+                        </div>
+
+                        <Link
+                          href={{
+                            pathname: `/estudiante/librosPorMateria/${materia.idMateria}`,
+                            query: { materiaNombre: materia.nombreMateria },
+                          }}
+                          className="block w-full bg-[#0048ac] text-white font-medium text-center py-2 rounded hover:bg-[#02013f] transition-colors"
+                        >
+                          VER LIBROS
+                        </Link>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="bg-white rounded-xl shadow p-8 text-center">
+                  <div className="flex justify-center mb-4">
+                    <BookOpen className="h-16 w-16 text-gray-300" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-700 mb-2">No hay materias disponibles</h3>
+                  <p className="text-gray-500">No se encontraron materias para este semestre.</p>
+                </div>
+              )}
+            </motion.div>
+
+            <motion.div
+              className="lg:col-span-1"
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+            >
+              <div className="bg-gradient-to-br from-[#0048ac] to-[#02013f] text-white rounded-xl shadow-lg overflow-hidden">
+                <div className="p-6">
+                  <h2 className="text-2xl font-bold mb-4">¡Siempre hay algo nuevo!</h2>
+                  <div className="relative h-56 mb-5 rounded-lg overflow-hidden">
+                    <Image
+                      src="/8.jpg"
+                      alt="Nuevos cursos"
+                      width={400}
+                      height={300}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                  </div>
+                  <p className="text-gray-200 text-base leading-relaxed mb-6">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore
+                    et dolore magna aliqua.
+                  </p>
+                </div>
+                <div className="bg-[#02013f] p-6">
+                  <h3 className="font-semibold mb-3 text-white/90">Recursos destacados</h3>
+                  <ul className="space-y-3">
+                    <li className="flex items-center gap-3">
+                      <div className="h-8 w-8 rounded-full bg-[#0048ac] flex items-center justify-center">
+                        <BookOpen className="h-4 w-4 text-white" />
+                      </div>
+                      <span className="text-white/80 text-sm">Biblioteca virtual</span>
+                    </li>
+                    <li className="flex items-center gap-3">
+                      <div className="h-8 w-8 rounded-full bg-[#0048ac] flex items-center justify-center">
+                        <GraduationCap className="h-4 w-4 text-white" />
+                      </div>
+                      <span className="text-white/80 text-sm">Cursos complementarios</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
       </motion.div>
+    </div>
   )
 }
 
 export default function MateriasGrid() {
   return (
-    <Suspense fallback={<div>Cargando...</div>}>
+    <Suspense
+      fallback={
+        <div className="flex justify-center items-center h-screen">
+          <div className="relative h-16 w-16">
+            <div className="absolute h-full w-full rounded-full bg-[#0048ac] opacity-75"></div>
+            <div className="relative rounded-full h-16 w-16 bg-[#0048ac] flex items-center justify-center">
+              <BookOpen className="h-8 w-8 text-white" />
+            </div>
+          </div>
+        </div>
+      }
+    >
       <MateriasGridContent />
     </Suspense>
   )
